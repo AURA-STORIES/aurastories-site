@@ -1,7 +1,7 @@
 :root {
   --bg: #f5efe4;
   --bg-soft: #fbf7f0;
-  --card: rgba(255, 252, 246, 0.9);
+  --card: rgba(255, 252, 246, 0.92);
   --text: #2f271e;
   --muted: #6f6253;
   --gold: #9b7a3d;
@@ -14,7 +14,6 @@
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -27,15 +26,8 @@ body {
   line-height: 1.65;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
 
 .container {
   width: min(calc(100% - 2rem), var(--container));
@@ -67,12 +59,11 @@ img {
   background: transparent;
   border-radius: 0;
   box-shadow: none;
-  text-decoration: none;
 }
 
 .brand-mark img {
   display: block;
-  height: 64px;
+  height: 52px;
   width: auto;
   object-fit: contain;
 }
@@ -120,16 +111,16 @@ img {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(31, 24, 18, 0.75), rgba(31,24,18,0.28) 45%, rgba(31,24,18,0.1) 100%),
-    url('Vol - 1.jpg') center 26% / cover no-repeat;
-  transform: scale(1.03);
-  filter: saturate(0.8) brightness(0.9);
+    linear-gradient(90deg, rgba(31, 24, 18, 0.72), rgba(31, 24, 18, 0.30) 45%, rgba(31, 24, 18, 0.10) 100%),
+    url('tamil-hero.jpg') center center / cover no-repeat;
+  transform: scale(1.02);
+  filter: saturate(0.88) brightness(0.90);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(245,239,228,0.08) 0%, rgba(245,239,228,0.25) 100%);
+  background: linear-gradient(180deg, rgba(245,239,228,0.08) 0%, rgba(245,239,228,0.18) 100%);
 }
 
 .hero-content {
@@ -397,7 +388,7 @@ img {
 .volume-content {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
   padding: 1rem 1rem 1.15rem;
 }
 
@@ -419,11 +410,15 @@ img {
 .volume-content p {
   margin: 0;
   color: var(--muted);
-  min-height: 2.8em;
+}
+
+.volume-subtitle {
+  min-height: 3.2em;
+  font-size: 0.98rem;
 }
 
 .volume-actions {
-  margin-top: 0.6rem;
+  margin-top: 0.75rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
@@ -457,20 +452,36 @@ img {
 .featured {
   grid-column: span 2;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: 340px 1fr;
+  align-items: stretch;
+}
+
+.featured-cover-wrap {
+  background: #f7f2e8;
+  display: flex;
+  align-items: stretch;
 }
 
 .featured img {
+  width: 100%;
   height: 100%;
+  max-height: 620px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .featured .volume-content {
   justify-content: center;
-  padding: 1.4rem;
+  padding: 1.8rem;
 }
 
 .featured .volume-content h3 {
   font-size: 2.25rem;
+}
+
+.featured .volume-subtitle {
+  min-height: auto;
+  font-size: 1.02rem;
 }
 
 .tamil-block {
@@ -559,6 +570,10 @@ img {
 
   .featured {
     grid-column: span 3;
+  }
+
+  .featured-cover-wrap {
+    max-width: 420px;
   }
 }
 
