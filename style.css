@@ -8,13 +8,19 @@
   --gold-soft: #c6ab76;
   --line: rgba(88, 66, 37, 0.14);
   --shadow: 0 20px 55px rgba(52, 36, 19, 0.12);
+  --shadow-book: 0 20px 34px rgba(58, 39, 18, 0.18);
   --radius: 24px;
   --radius-sm: 18px;
   --container: 1180px;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -26,8 +32,15 @@ body {
   line-height: 1.65;
 }
 
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
 
 .container {
   width: min(calc(100% - 2rem), var(--container));
@@ -115,12 +128,14 @@ img { display: block; max-width: 100%; }
     url('tamil-hero.jpg') center center / cover no-repeat;
   transform: scale(1.02);
   filter: saturate(0.88) brightness(0.90);
+  animation: heroSlowZoom 18s ease-in-out infinite alternate;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(245,239,228,0.08) 0%, rgba(245,239,228,0.18) 100%);
+  background:
+    linear-gradient(180deg, rgba(245,239,228,0.08) 0%, rgba(245,239,228,0.18) 100%);
 }
 
 .hero-content {
@@ -232,12 +247,13 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   box-shadow: 0 35px 80px rgba(14, 8, 4, 0.36);
   border: 1px solid rgba(255, 246, 229, 0.22);
+  background: rgba(247, 242, 232, 0.98);
 }
 
 .hero-book-frame img {
   width: 100%;
-  aspect-ratio: 3 / 4.65;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
 .hero-book-caption {
@@ -377,12 +393,24 @@ img { display: block; max-width: 100%; }
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.volume-card:hover {
+  transform: perspective(1000px) rotateX(1.5deg) rotateY(-3deg) translateY(-6px);
+  box-shadow: 0 26px 40px rgba(58, 39, 18, 0.22);
 }
 
 .volume-card img {
   width: 100%;
   aspect-ratio: 3 / 4.5;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.volume-card:hover img {
+  transform: scale(1.015);
 }
 
 .volume-content {
@@ -464,9 +492,9 @@ img { display: block; max-width: 100%; }
 
 .featured img {
   width: 100%;
-  height: 100%;
-  max-height: 620px;
-  object-fit: cover;
+  height: auto;
+  max-height: 720px;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -549,6 +577,15 @@ img { display: block; max-width: 100%; }
 
 .site-footer p {
   margin: 0.2rem 0 0;
+}
+
+@keyframes heroSlowZoom {
+  0% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1.07);
+  }
 }
 
 @media (max-width: 1100px) {
