@@ -6,6 +6,7 @@
   <title>For Kaviya 💌</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -14,12 +15,14 @@
       background: radial-gradient(circle at top, #fff7fb 0%, #ffe4ee 35%, #ffeef8 70%, #fffafc 100%);
       overflow-x: hidden;
     }
+
     .app {
       min-height: 100vh;
       padding: 16px;
       position: relative;
       overflow: hidden;
     }
+
     .app::before {
       content: "";
       position: absolute;
@@ -27,7 +30,9 @@
       pointer-events: none;
       background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent 35%, rgba(255,255,255,0.12) 70%, transparent);
     }
+
     .romantic-fade { animation: fadeIn .45s ease-out both; }
+
     .center-shell,
     .page-shell {
       position: relative;
@@ -36,6 +41,7 @@
       margin: 0 auto;
       padding: 32px 0;
     }
+
     .center-shell {
       max-width: 640px;
       min-height: 82vh;
@@ -43,6 +49,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .card,
     .letter-card {
       width: 100%;
@@ -53,10 +60,12 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
+
     .card {
       padding: 32px;
       text-align: center;
     }
+
     .lock-circle {
       width: 80px;
       height: 80px;
@@ -69,6 +78,7 @@
       justify-content: center;
       font-size: 34px;
     }
+
     .title {
       margin: 12px 0 0;
       font-size: 34px;
@@ -76,17 +86,20 @@
       font-weight: 700;
       line-height: 1.15;
     }
+
     .form-grid {
       display: grid;
       gap: 16px;
       margin-top: 28px;
     }
+
     .input,
     .button,
     .toggle {
       border-radius: 18px;
       font: inherit;
     }
+
     .input {
       width: 100%;
       padding: 18px 20px;
@@ -96,6 +109,7 @@
       font-size: 20px;
       outline: none;
     }
+
     .button {
       border: none;
       padding: 18px 20px;
@@ -106,10 +120,12 @@
       background: #f43f5e;
       box-shadow: 0 12px 24px rgba(244,63,94,0.24);
     }
+
     .error {
       margin-top: 14px;
       color: #e11d48;
     }
+
     .topbar {
       display: flex;
       align-items: center;
@@ -118,12 +134,14 @@
       flex-wrap: wrap;
       margin-bottom: 24px;
     }
+
     .name {
       margin: 0;
       font-size: 44px;
       color: #0f172a;
       font-weight: 700;
     }
+
     .toggle {
       border: 1px solid #fecdd3;
       background: rgba(255,255,255,0.85);
@@ -132,33 +150,27 @@
       cursor: pointer;
       font-size: 15px;
     }
+
     .letter-card {
       padding: 36px 32px;
       line-height: 2;
       font-size: 18px;
     }
+
     .section { margin-bottom: 24px; }
+
     .greeting {
       margin: 0 0 12px;
       font-size: 32px;
       font-weight: 700;
       color: #0f172a;
     }
+
     .soft-italic {
       font-style: italic;
       color: #475569;
     }
-    .request-box {
-      background: #fff1f2;
-      border-left: 5px solid #fb7185;
-      border-radius: 20px;
-      padding: 18px 22px;
-    }
-    .request-box .heading,
-    .subheading-strong {
-      font-weight: 700;
-      color: #0f172a;
-    }
+
     .friend-box {
       background: #ffe4e6;
       border-radius: 28px;
@@ -170,15 +182,18 @@
       animation: friendReveal 1.2s ease-out forwards;
       animation-delay: 0.3s;
     }
+
     .friend-box .okay {
       font-weight: 700;
       font-size: 20px;
       margin: 0 0 10px;
     }
+
     .friend-box .friend-line {
       font-style: italic;
       margin: 0;
     }
+
     .friend-box .friend-q {
       margin: 14px 0 0;
       font-size: 34px;
@@ -189,30 +204,7 @@
       animation: friendQuestionReveal 1.6s ease-out forwards;
       animation-delay: 0.9s;
     }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 14px;
-    }
-    .contact-card {
-      border-radius: 22px;
-      padding: 20px;
-      border: 1px solid #fecdd3;
-    }
-    .contact-card.rose { background: rgba(255,241,242,0.9); }
-    .contact-card.pink { background: rgba(252,231,243,0.9); }
-    .contact-title {
-      font-weight: 700;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .contact-value {
-      color: #64748b;
-      margin-top: 8px;
-    }
+
     .blessing {
       text-align: center;
       font-size: 24px;
@@ -220,12 +212,7 @@
       margin-top: 30px;
       color: #1e293b;
     }
-    .footer {
-      text-align: center;
-      font-size: 14px;
-      color: #64748b;
-      margin-top: 24px;
-    }
+
     .bg-layer {
       position: absolute;
       inset: 0;
@@ -233,6 +220,7 @@
       overflow: hidden;
       z-index: 1;
     }
+
     .heart {
       position: absolute;
       bottom: -20px;
@@ -241,8 +229,13 @@
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
+
     .desktop-only { display: none; }
-    @media (min-width: 768px) { .desktop-only { display: block; } }
+
+    @media (min-width: 768px) {
+      .desktop-only { display: block; }
+    }
+
     @media (max-width: 767px) {
       .card, .letter-card { padding: 24px 18px; border-radius: 24px; }
       .name { font-size: 34px; }
@@ -250,28 +243,34 @@
       .friend-box .friend-q { font-size: 28px; }
       .blessing { font-size: 20px; }
     }
+
     @keyframes floatUp {
       0% { transform: translateY(0px); opacity: 0; }
       20% { opacity: .75; }
       60% { transform: translate(16px, -140px); opacity: .9; }
       100% { transform: translate(0px, -260px); opacity: 0; }
     }
+
     @keyframes bob {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
     }
+
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: .75; }
       50% { transform: scale(1.1); opacity: 1; }
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(18px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     @keyframes friendReveal {
       0% { opacity: 0; transform: translateY(18px) scale(0.96); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
+
     @keyframes friendQuestionReveal {
       0% { opacity: 0; transform: scale(0.92); }
       55% { opacity: 0.85; transform: scale(1.04); }
@@ -286,11 +285,6 @@
     const tanglishContent = {
       greeting: "Hi Kaviya,",
       intro: "Ungalukku ennai pudichiruka illaya nu enakku theriyadhu… but en manasula irukkaradhu honest-ah share pannalam nu thonuchu.",
-      requestTitle: "",
-      request: "",
-      request2: "",
-      ifTitle: "",
-      ifText: "",
       spark: "Ungaloda photo patha udane, adhu just attraction illa… oru small spark, oru calm feeling vandhuduchu — 'Ivanga kooda irundha life romba azhaga irukkum' nu oru mind voice.",
       meet: "Adhe mindset-oda dhaan ungala paaka vandhen. Neraya pesanum nu plan irundhudhu… but epdi start pannanum nu theriyala.",
       talk: "Last-la oru mindset-ku vandhen — neenga kekkura questions-ku unmaiya answer pannanum avalo dhaan. Unfortunately, namma pesikave illa 😀",
@@ -300,20 +294,12 @@
       okay: "Nambikkai irundha… oru 'okay' sollunga.",
       friend: "I'm really looking for a good friend, not just a soulmate.",
       friendQ: "Will you be my friend?",
-      mother: "",
-      contact: "",
-      blessing: "🦚 🙏 Muruga 🙏 🦚",
-      footer: ""
+      blessing: "🦚 🙏 Muruga 🙏 🦚"
     };
 
     const englishContent = {
       greeting: "Hi Kaviya,",
       intro: "I don't really know if you like me or not… but I felt like sharing what's in my heart, honestly and gently.",
-      requestTitle: "",
-      request: "",
-      request2: "",
-      ifTitle: "",
-      ifText: "",
       spark: "The first time I saw your photo, it didn't feel like mere attraction… It was something softer, calmer — like a quiet spark. A small voice within me said, 'Life might feel right with her.'",
       meet: "With that same feeling, I came to meet you. I had so many thoughts — to talk, to ask, to understand you better… but I didn't know where or how to begin.",
       talk: "In the end, I told myself one simple thing — to answer whatever you asked, honestly and truly. And somehow… we didn't really get to talk at all 😀",
@@ -323,10 +309,7 @@
       okay: "If you feel even a little sense of trust… just say a simple 'okay'.",
       friend: "I'm really looking for a good friend, not just a soulmate.",
       friendQ: "Will you be my friend?",
-      mother: "Mother felt it's better not to share numbers immediately — at least until your studies are complete. I truly respect her words.",
-      contact: "",
-      blessing: "🦚 🙏 Muruga 🙏 🦚",
-      footer: ""
+      blessing: "🦚 🙏 Muruga 🙏 🦚"
     };
 
     function normalizePassword(value) {
@@ -348,6 +331,17 @@
         heart.style.animationDelay = `${i * 0.45}s`;
         container.appendChild(heart);
       }
+    }
+
+    function section(text, prefix) {
+      const div = document.createElement("div");
+      div.className = "section";
+
+      const p = document.createElement("p");
+      p.textContent = `${prefix} ${text}`;
+      div.appendChild(p);
+
+      return div;
     }
 
     function createPasswordScreen(app, state, rerender) {
@@ -395,6 +389,7 @@
 
       form.appendChild(input);
       form.appendChild(button);
+
       card.appendChild(lock);
       card.appendChild(title);
       card.appendChild(form);
@@ -408,30 +403,6 @@
 
       wrap.appendChild(card);
       app.appendChild(wrap);
-    }
-
-    function createContactRow() {
-      const grid = document.createElement("div");
-      grid.className = "contact-grid";
-
-      const phone = document.createElement("div");
-      phone.className = "contact-card rose";
-      phone.innerHTML = `
-        <div class="contact-title">Phone / WhatsApp</div>
-        <div class="contact-value">Add your number here</div>
-      `;
-
-      
-      return grid;
-    }
-
-    function section(text, prefix, extraClass) {
-      const div = document.createElement("div");
-      div.className = `section ${extraClass || ""}`.trim();
-      const p = document.createElement("p");
-      p.innerHTML = prefix ? `${prefix} ${text}` : text;
-      div.appendChild(p);
-      return div;
     }
 
     function createLetterView(app, state, rerender) {
@@ -469,8 +440,6 @@
         <p class="soft-italic">${content.intro}</p>
       `;
 
-      card.appendChild(greetingSection);
-
       const friendBox = document.createElement("div");
       friendBox.className = "section friend-box";
       friendBox.innerHTML = `
@@ -483,13 +452,7 @@
       blessing.className = "blessing";
       blessing.textContent = content.blessing;
 
-      const footer = document.createElement("p");
-      footer.className = "footer";
-      footer.textContent = "";
-
-      
-
-      
+      card.appendChild(greetingSection);
       card.appendChild(section(content.spark, "💫"));
       card.appendChild(section(content.meet, "🌸"));
       card.appendChild(section(content.talk, "😅"));
@@ -497,7 +460,6 @@
       card.appendChild(section(content.promise, "💖"));
       card.appendChild(section(content.learn, "🌱"));
       card.appendChild(friendBox);
-      
       card.appendChild(blessing);
 
       shell.appendChild(topbar);
@@ -532,7 +494,7 @@
       panda.style.bottom = "20px";
       panda.style.fontSize = "88px";
       panda.style.animation = "bob 4.2s ease-in-out infinite";
-      panda.innerHTML = `<span role="img" aria-label="panda teddy">🐼</span><span style="position:absolute;right:-10px;top:-8px;font-size:28px;animation:pulse 1.6s ease-in-out infinite;">💖</span>`;
+      panda.innerHTML = '<span role="img" aria-label="panda teddy">🐼</span><span style="position:absolute;right:-10px;top:-8px;font-size:28px;animation:pulse 1.6s ease-in-out infinite;">💖</span>';
       bg.appendChild(panda);
 
       app.appendChild(bg);
@@ -551,25 +513,7 @@
       lang: "tanglish"
     };
 
-    const selfTests = [
-      isCorrectPassword("21/08/2002", "21/08/2002") === true,
-      isCorrectPassword(" 21/08/2002 ", "21/08/2002") === true,
-      isCorrectPassword("21-08-2002", "21/08/2002") === true,
-      normalizePassword(null) === "",
-      normalizePassword("  hi  ") === "hi",
-      typeof buildFloatingHearts === "function",
-      typeof createPasswordScreen === "function",
-      typeof createContactRow === "function",
-      typeof createLetterView === "function",
-      tanglishContent.friendQ.length > 0,
-      englishContent.friendQ.length > 0
-    ];
-
-    if (selfTests.some(result => result !== true)) {
-      document.body.innerHTML = '<div style="padding:24px;font-family:system-ui;color:#b91c1c;">Self-test failed.</div>';
-    } else {
-      render();
-    }
+    render();
   </script>
 </body>
 </html>
