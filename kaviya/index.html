@@ -4,183 +4,521 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For Kaviya 💌</title>
-
   <style>
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: ui-sans-serif, system-ui;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: #334155;
-      background: radial-gradient(circle at top, #fff7fb 0%, #ffe4ee 35%, #fffafc 100%);
+      background: radial-gradient(circle at top, #fff7fb 0%, #ffe4ee 35%, #ffeef8 70%, #fffafc 100%);
+      overflow-x: hidden;
     }
 
     .app {
       min-height: 100vh;
       padding: 16px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .center-shell, .page-shell {
-      max-width: 700px;
-      margin: auto;
-      padding: 30px 0;
+    .app::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent 35%, rgba(255,255,255,0.12) 70%, transparent);
     }
 
-    .card, .letter-card {
-      background: rgba(255,255,255,0.9);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 10px 40px rgba(244,114,182,0.2);
+    .romantic-fade { animation: fadeIn .45s ease-out both; }
+
+    .center-shell,
+    .page-shell {
+      position: relative;
+      z-index: 2;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    .center-shell {
+      max-width: 640px;
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card,
+    .letter-card {
+      width: 100%;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.72);
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(244,114,182,0.16);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .card {
+      padding: 32px;
+      text-align: center;
+    }
+
+    .lock-circle {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      border-radius: 999px;
+      background: #ffe4e6;
+      border: 1px solid #fecdd3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
     }
 
     .title {
-      font-size: 28px;
-      text-align: center;
+      margin: 12px 0 0;
+      font-size: 34px;
+      color: #0f172a;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .input,
+    .button,
+    .toggle {
+      border-radius: 18px;
+      font: inherit;
     }
 
     .input {
       width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      margin-top: 16px;
+      padding: 18px 20px;
+      border: 1px solid #fecdd3;
+      background: rgba(255,255,255,0.96);
+      text-align: center;
+      font-size: 20px;
+      outline: none;
     }
 
     .button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 14px;
       border: none;
-      border-radius: 12px;
-      background: #f43f5e;
+      padding: 18px 20px;
+      font-size: 20px;
+      font-weight: 600;
       color: white;
       cursor: pointer;
+      background: #f43f5e;
+      box-shadow: 0 12px 24px rgba(244,63,94,0.24);
+    }
+
+    .error {
+      margin-top: 14px;
+      color: #e11d48;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
     }
 
     .name {
-      font-size: 30px;
-      margin-bottom: 10px;
+      margin: 0;
+      font-size: 44px;
+      color: #0f172a;
+      font-weight: 700;
     }
 
-    .section { margin-bottom: 18px; }
+    .toggle {
+      border: 1px solid #fecdd3;
+      background: rgba(255,255,255,0.85);
+      color: #334155;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .letter-card {
+      padding: 36px 32px;
+      line-height: 2;
+      font-size: 18px;
+    }
+
+    .section { margin-bottom: 24px; }
 
     .greeting {
-      font-size: 22px;
-      font-weight: bold;
+      margin: 0 0 12px;
+      font-size: 32px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .soft-italic {
+      font-style: italic;
+      color: #475569;
     }
 
     .friend-box {
       background: #ffe4e6;
-      padding: 20px;
-      border-radius: 16px;
+      border-radius: 28px;
+      padding: 30px 20px;
       text-align: center;
+      box-shadow: 0 0 24px rgba(251,113,133,0.16);
+      opacity: 0;
+      transform: translateY(18px) scale(0.96);
+      animation: friendReveal 1.2s ease-out forwards;
+      animation-delay: 0.3s;
     }
 
-    .friend-q {
-      font-size: 24px;
-      font-weight: bold;
+    .friend-box .okay {
+      font-weight: 700;
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+
+    .friend-box .friend-line {
+      font-style: italic;
+      margin: 0;
+    }
+
+    .friend-box .friend-q {
+      margin: 14px 0 0;
+      font-size: 34px;
+      font-weight: 800;
       color: #e11d48;
+      opacity: 0;
+      transform: scale(0.92);
+      animation: friendQuestionReveal 1.6s ease-out forwards;
+      animation-delay: 0.9s;
     }
 
     .blessing {
       text-align: center;
-      margin-top: 20px;
-      font-size: 20px;
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 30px;
+      color: #1e293b;
     }
 
-    .phone {
-      margin-top: 12px;
-      font-size: 16px;
-      color: #475569;
+    .bg-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
     }
 
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      opacity: 0;
+      animation-name: floatUp;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .desktop-only { display: none; }
+
+    @media (min-width: 768px) {
+      .desktop-only { display: block; }
+    }
+
+    @media (max-width: 767px) {
+      .card, .letter-card { padding: 24px 18px; border-radius: 24px; }
+      .name { font-size: 34px; }
+      .greeting { font-size: 28px; }
+      .friend-box .friend-q { font-size: 28px; }
+      .blessing { font-size: 20px; }
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0px); opacity: 0; }
+      20% { opacity: .75; }
+      60% { transform: translate(16px, -140px); opacity: .9; }
+      100% { transform: translate(0px, -260px); opacity: 0; }
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: .75; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes friendReveal {
+      0% { opacity: 0; transform: translateY(18px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes friendQuestionReveal {
+      0% { opacity: 0; transform: scale(0.92); }
+      55% { opacity: 0.85; transform: scale(1.04); }
+      100% { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
-
 <body>
-<div class="app" id="app"></div>
+  <div class="app" id="app"></div>
 
-<script>
+  <script>
+    const tanglishContent = {
+      greeting: "Hi Kaviya,",
+      intro: "Ungalukku ennai pudichiruka illaya nu enakku theriyadhu… but en manasula irukkaradhu honest-ah share pannalam nu thonuchu.",
+      spark: "Ungaloda photo patha udane, adhu just attraction illa… oru small spark, oru calm feeling vandhuduchu — 'Ivanga kooda irundha life romba azhaga irukkum' nu oru mind voice.",
+      meet: "Adhe mindset-oda dhaan ungala paaka vandhen. Neraya pesanum nu plan irundhudhu… but epdi start pannanum nu theriyala.",
+      talk: "Last-la oru mindset-ku vandhen — neenga kekkura questions-ku unmaiya answer pannanum avalo dhaan. Unfortunately, namma pesikave illa 😀",
+      shy: "Ungala pathathum, Life-la first time, naan konjam blush-a feel panninen… And andha blush unga side-layum paathen — adhu romba cute-a irundhudhu 🥰",
+      promise: "Naan 'ippadi paathupen, appadi paathupen' nu promises panna maaten… But ungalukku pudicha maadhiri, enakku therinja chinna chinna surprises-oda, care-oda nalla pathupen nu namburen.",
+      learn: "Life la nanum learning phase la tha irruken, ellam senthu kathukalam",
+      okay: "Nambikkai irundha… oru 'okay' sollunga.",
+      friend: "I'm really looking for a good friend, not just a soulmate.",
+      friendQ: "Will you be my friend?",
+      blessing: "🦚 🙏 Muruga 🙏 🦚"
+    };
 
-const content = {
-  greeting: "Hi Kaviya 😊",
-  intro: "Ungalukku ennai pudichiruka illaya nu theriyadhu… but en manasula irukkaradhu share pannalam nu thonuchu.",
-  spark: "Ungaloda photo patha udane oru calm feeling vandhuduchu.",
-  meet: "Adhe mindset-oda dhaan ungala paaka vandhen.",
-  talk: "But namma pesave illa 😀",
-  shy: "Life-la first time naan konjam blush-a feel panninen 🥰",
-  promise: "Big promises panna maaten… but care pannuvan.",
-  learn: "Life la nanum learning phase la tha irruken.",
-  okay: "Nambikkai irundha… oru 'okay' sollunga.",
-  friend: "I'm really looking for a good friend.",
-  friendQ: "Will you be my friend?",
-  blessing: "🦚 🙏 Muruga 🙏 🦚"
-};
+    const englishContent = {
+      greeting: "Hi Kaviya,",
+      intro: "I don't really know if you like me or not… but I felt like sharing what's in my heart, honestly and gently.",
+      spark: "The first time I saw your photo, it didn't feel like mere attraction… It was something softer, calmer — like a quiet spark. A small voice within me said, 'Life might feel right with her.'",
+      meet: "With that same feeling, I came to meet you. I had so many thoughts — to talk, to ask, to understand you better… but I didn't know where or how to begin.",
+      talk: "In the end, I told myself one simple thing — to answer whatever you asked, honestly and truly. And somehow… we didn't really get to talk at all 😀",
+      shy: "For the first time in my life, I felt myself blush a little… And I saw that same blush in you too — and it was truly beautiful 🥰",
+      promise: "I won't make big promises like 'I'll be this' or 'I'll be that'… But I believe I can care for you in ways that make you feel comfortable and happy — with small surprises, genuine effort, and understanding.",
+      learn: "I'm also in a learning phase in life… we can learn everything together.",
+      okay: "If you feel even a little sense of trust… just say a simple 'okay'.",
+      friend: "I'm really looking for a good friend, not just a soulmate.",
+      friendQ: "Will you be my friend?",
+      blessing: "🦚 🙏 Muruga 🙏 🦚"
+    };
 
-function renderLogin() {
-  const app = document.getElementById("app");
+    function normalizePassword(value) {
+      return String(value ?? "").trim();
+    }
 
-  app.innerHTML = `
-    <div class="center-shell">
-      <div class="card">
-        <h2 class="title">🔒 A small message</h2>
-        <input class="input" id="pwd" placeholder="Enter password"/>
-        <button class="button" onclick="check()">Open</button>
-        <p id="error"></p>
-      </div>
-    </div>
-  `;
-}
+    function isCorrectPassword(input, expected) {
+      return normalizePassword(input) === normalizePassword(expected);
+    }
 
-function check() {
-  const val = document.getElementById("pwd").value;
-  if (val === "21/08/2002") {
-    renderLetter();
-  } else {
-    document.getElementById("error").innerText = "Wrong password 💛";
-  }
-}
+    function buildFloatingHearts(container, count) {
+      for (let i = 0; i < count; i += 1) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "💗";
+        heart.style.left = `${6 + i * 8}%`;
+        heart.style.fontSize = `${14 + (i % 3) * 6}px`;
+        heart.style.animationDuration = `${6 + (i % 4)}s`;
+        heart.style.animationDelay = `${i * 0.45}s`;
+        container.appendChild(heart);
+      }
+    }
 
-function renderLetter() {
-  const app = document.getElementById("app");
+    function section(text, prefix) {
+      const div = document.createElement("div");
+      div.className = "section";
 
-  app.innerHTML = `
-    <div class="page-shell">
-      <div class="letter-card">
+      const p = document.createElement("p");
+      p.textContent = `${prefix} ${text}`;
+      div.appendChild(p);
 
-        <h1 class="name">💌 For Kaviya 🌷</h1>
+      return div;
+    }
 
-        <div class="section">
-          <p class="greeting">${content.greeting}</p>
-          <p>${content.intro}</p>
-        </div>
+    function createPasswordScreen(app, state, rerender) {
+      const wrap = document.createElement("div");
+      wrap.className = "center-shell romantic-fade";
 
-        <div class="section">💫 ${content.spark}</div>
-        <div class="section">🌸 ${content.meet}</div>
-        <div class="section">😅 ${content.talk}</div>
-        <div class="section">🥰 ${content.shy}</div>
-        <div class="section">💖 ${content.promise}</div>
-        <div class="section">🌱 ${content.learn}</div>
+      const card = document.createElement("div");
+      card.className = "card";
 
-        <div class="friend-box">
-          <p>${content.okay}</p>
-          <p>${content.friend}</p>
-          <p class="friend-q">💌 ${content.friendQ}</p>
-        </div>
+      const lock = document.createElement("div");
+      lock.className = "lock-circle";
+      lock.textContent = "🔒";
 
-        <div class="blessing">
-          <p>${content.blessing}</p>
-          <p class="phone">📞 Jaya Murugan – 7904486739</p>
-        </div>
+      const title = document.createElement("h1");
+      title.className = "title";
+      title.textContent = "A small message, for you";
 
-      </div>
-    </div>
-  `;
-}
+      const form = document.createElement("form");
+      form.className = "form-grid";
 
-renderLogin();
+      const input = document.createElement("input");
+      input.className = "input";
+      input.type = "password";
+      input.placeholder = "Enter password";
+      input.value = state.password;
+      input.addEventListener("input", (e) => {
+        state.password = e.target.value;
+      });
 
-</script>
+      const button = document.createElement("button");
+      button.className = "button";
+      button.type = "submit";
+      button.textContent = "Unfold the message";
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (isCorrectPassword(state.password, "21/08/2002")) {
+          state.unlocked = true;
+          state.error = "";
+        } else {
+          state.error = "Try the DOB format... 💛";
+        }
+        rerender();
+      });
+
+      form.appendChild(input);
+      form.appendChild(button);
+
+      card.appendChild(lock);
+      card.appendChild(title);
+      card.appendChild(form);
+
+      if (state.error) {
+        const error = document.createElement("p");
+        error.className = "error";
+        error.textContent = state.error;
+        card.appendChild(error);
+      }
+
+      wrap.appendChild(card);
+      app.appendChild(wrap);
+    }
+
+    function createLetterView(app, state, rerender) {
+      const content = state.lang === "tanglish" ? tanglishContent : englishContent;
+
+      const shell = document.createElement("div");
+      shell.className = "page-shell romantic-fade";
+
+      const topbar = document.createElement("div");
+      topbar.className = "topbar";
+
+      const title = document.createElement("h1");
+      title.className = "name";
+      title.textContent = "💌 For Kaviya 🌷";
+
+      const toggle = document.createElement("button");
+      toggle.className = "toggle";
+      toggle.type = "button";
+      toggle.textContent = state.lang === "tanglish" ? "🌍 English" : "💛 Tanglish";
+      toggle.addEventListener("click", () => {
+        state.lang = state.lang === "tanglish" ? "english" : "tanglish";
+        rerender();
+      });
+
+      topbar.appendChild(title);
+      topbar.appendChild(toggle);
+
+      const card = document.createElement("div");
+      card.className = "letter-card";
+
+      const greetingSection = document.createElement("div");
+      greetingSection.className = "section";
+      greetingSection.innerHTML = `
+        <p class="greeting">${content.greeting} 😊</p>
+        <p class="soft-italic">${content.intro}</p>
+      `;
+
+      const friendBox = document.createElement("div");
+      friendBox.className = "section friend-box";
+      friendBox.innerHTML = `
+        <p class="okay">${content.okay}</p>
+        <p class="friend-line">${content.friend}</p>
+        <p class="friend-q">💌 ${content.friendQ}</p>
+      `;
+
+      const blessing = document.createElement("p");
+      blessing.className = "blessing";
+      blessing.innerHTML = `
+        <p>${content.blessing}</p>
+        <p style="margin-top:12px; font-size:16px; font-weight:500;">
+        📞 Journey – 7904486739
+        </p>
+    `;
+
+      card.appendChild(greetingSection);
+      card.appendChild(section(content.spark, "💫"));
+      card.appendChild(section(content.meet, "🌸"));
+      card.appendChild(section(content.talk, "😅"));
+      card.appendChild(section(content.shy, "🥰"));
+      card.appendChild(section(content.promise, "💖"));
+      card.appendChild(section(content.learn, "🌱"));
+      card.appendChild(friendBox);
+      card.appendChild(blessing);
+
+      shell.appendChild(topbar);
+      shell.appendChild(card);
+      app.appendChild(shell);
+    }
+
+    function render() {
+      const app = document.getElementById("app");
+      app.innerHTML = "";
+
+      const bg = document.createElement("div");
+      bg.className = "bg-layer";
+      buildFloatingHearts(bg, 10);
+
+      const birds = document.createElement("div");
+      birds.className = "desktop-only";
+      birds.style.position = "absolute";
+      birds.style.top = "40px";
+      birds.style.left = "50%";
+      birds.style.transform = "translateX(-50%)";
+      birds.style.fontSize = "42px";
+      birds.style.animation = "bob 4.8s ease-in-out infinite";
+      birds.style.whiteSpace = "nowrap";
+      birds.textContent = "🐦 💗 🐦";
+      bg.appendChild(birds);
+
+      const panda = document.createElement("div");
+      panda.className = "desktop-only";
+      panda.style.position = "absolute";
+      panda.style.left = "24px";
+      panda.style.bottom = "20px";
+      panda.style.fontSize = "88px";
+      panda.style.animation = "bob 4.2s ease-in-out infinite";
+      panda.innerHTML = '<span role="img" aria-label="panda teddy">🐼</span><span style="position:absolute;right:-10px;top:-8px;font-size:28px;animation:pulse 1.6s ease-in-out infinite;">💖</span>';
+      bg.appendChild(panda);
+
+      app.appendChild(bg);
+
+      if (state.unlocked) {
+        createLetterView(app, state, render);
+      } else {
+        createPasswordScreen(app, state, render);
+      }
+    }
+
+    const state = {
+      password: "",
+      unlocked: false,
+      error: "",
+      lang: "tanglish"
+    };
+
+    render();
+  </script>
 </body>
 </html>
