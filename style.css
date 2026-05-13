@@ -59,7 +59,7 @@ img { display: block; max-width: 100%; }
 }
 .top-nav a:hover::after { transform: scaleX(1); }
 
-/* Hero Section */
+/* Hero Section - Layered for Visibility */
 .hero {
   position: relative; overflow: hidden;
   min-height: calc(100vh - 92px);
@@ -69,20 +69,13 @@ img { display: block; max-width: 100%; }
 .hero::before {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(31, 24, 18, 0.72), rgba(31, 24, 18, 0.30) 45%, rgba(31, 24, 18, 0.10) 100%),
+    /* Increased left darkness to make text pop while keeping bull clear */
+    linear-gradient(90deg, rgba(20, 15, 10, 0.85) 0%, rgba(20, 15, 10, 0.35) 45%, transparent 100%),
     url('tamil-hero.jpg') center center / cover no-repeat;
   transform: scale(1.06);
-  filter: saturate(0.92) brightness(0.92);
-  animation: heroPanZoom 9s ease-in-out infinite alternate;
+  filter: saturate(0.95) brightness(0.9);
+  animation: heroPanZoom 12s ease-in-out infinite alternate;
   will-change: transform;
-}
-
-.hero::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(115deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.08) 40%, rgba(255,255,255,0) 60%);
-  transform: translateX(-120%);
-  animation: heroLightSweep 6s ease-in-out infinite;
-  pointer-events: none;
 }
 
 .hero-content {
@@ -95,26 +88,39 @@ img { display: block; max-width: 100%; }
 .hero h1 { 
   margin: 0; font-family: "Cormorant Garamond", serif;
   font-size: clamp(3.5rem, 8vw, 6.4rem); line-height: 0.92; font-weight: 600; 
+  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
 }
 
 .tagline { margin: 1.3rem 0 0.2rem; font-size: clamp(1.25rem, 3vw, 1.75rem); font-weight: 600; color: #f3deae; }
 .tagline-tamil { font-family: "Noto Serif Tamil", serif; font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(249, 238, 212, 0.9); }
 
-/* --- PEEK-A-BOO HERO CARD OFFSET --- */
+/* Floating Hero Card - Solves blocked face issue */
 .hero-card {
   justify-self: end;
   max-width: 360px;
   width: 100%;
-  /* Shift the book 15% to the right to reveal background details */
-  transform: translateX(15%); 
-  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  z-index: 2;
+  position: relative;
+  /* Push book right 18% to reveal the bull's face */
+  transform: translateX(18%) perspective(1000px) rotateY(-5deg);
+  transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: floatBook 4s ease-in-out infinite alternate;
 }
 
-/* Slide book back into full view when the hero section is hovered */
 .hero:hover .hero-card {
-  transform: translateX(0);
+  /* Pull back on hover for full viewing */
+  transform: translateX(0) perspective(1000px) rotateY(0deg);
 }
+
+.hero-book-frame {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 246, 229, 0.2);
+  background: #000; /* Solid base for the cover image */
+}
+
+.hero-book-frame img { width: 100%; transition: transform 0.8s ease; }
+.hero-card:hover .hero-book-frame img { transform: scale(1.05); }
 
 /* Buttons */
 .btn {
@@ -125,31 +131,6 @@ img { display: block; max-width: 100%; }
 .btn-primary { background: linear-gradient(135deg, #bb9658, #8c6e37); color: #fff9ef; box-shadow: 0 12px 32px rgba(149, 111, 44, 0.35); }
 .btn-secondary { background: rgba(255, 250, 241, 0.12); color: #fff6e8; border: 1px solid rgba(255, 239, 208, 0.3); }
 .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-/* Hero Book Frame Fixes */
-.hero-book-frame {
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 35px 80px rgba(14, 8, 4, 0.4);
-  border: 1px solid rgba(255, 246, 229, 0.3);
-  background: rgba(255, 255, 255, 0.1); 
-  backdrop-filter: blur(8px);
-}
-
-.hero-book-frame img { width: 100%; opacity: 0.95; }
-
-.hero-book-caption {
-  margin-top: 1.2rem;
-  padding: 1.2rem;
-  border-radius: 18px;
-  color: #ffffff;
-  background: rgba(15, 10, 5, 0.85); 
-  border: 1px solid var(--gold);
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.hero-book-caption strong { display: block; font-size: 1.1rem; margin-top: 0.4rem; color: var(--gold-soft); }
 
 /* Section Styling */
 .section { padding: 80px 0; scroll-margin-top: 90px; }
@@ -184,8 +165,15 @@ img { display: block; max-width: 100%; }
 .connect-card strong { display: block; color: var(--text); margin-top: 0.5rem; word-break: break-word; }
 
 /* Animations */
-@keyframes heroPanZoom { 0% { transform: scale(1.06) translate(0,0); } 100% { transform: scale(1.12) translate(-1%, -1%); } }
-@keyframes heroLightSweep { 0% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes heroPanZoom { 
+  0% { transform: scale(1.06) translate(0,0); } 
+  100% { transform: scale(1.15) translate(-1.5%, -1%); } 
+}
+
+@keyframes floatBook {
+  0% { margin-top: 0; }
+  100% { margin-top: -15px; }
+}
 
 /* Footer */
 .site-footer { padding: 2rem 0; border-top: 1px solid var(--line); }
@@ -196,6 +184,6 @@ img { display: block; max-width: 100%; }
   .hero-content, .featured, .two-col, .two-col.reverse { grid-template-columns: 1fr; }
   .connect-grid { grid-template-columns: 1fr; }
   .featured-cover-wrap { height: 400px; }
-  /* Remove peek-a-boo offset on smaller screens for better centered layout */
-  .hero-card { transform: translateX(0); margin: 0 auto; }
+  /* Center book and remove sideways peek-a-boo on small screens */
+  .hero-card { transform: translateX(0); margin: 0 auto; animation: floatBook 3s ease-in-out infinite alternate; }
 }
