@@ -397,8 +397,8 @@ img {
 
 .volume-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Better responsiveness */
+  gap: 1.5rem;
 }
 
 .volume-card {
@@ -409,8 +409,7 @@ img {
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  height: 100%; /* Ensures cards are equal height */
 }
 
 .volume-card:hover {
@@ -452,8 +451,29 @@ img {
 }
 
 .volume-content p {
-  margin: 0;
+  margin: 0.5rem 0;
   color: var(--muted);
+  min-height: 3.2em; /* Prevents jumping between 1 and 2 line titles */
+  font-size: 0.95rem;
+}
+
+.volume-content p em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold);
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 900px) {
+  .featured {
+    grid-template-columns: 1fr;
+  }
+  .featured img {
+    height: 300px;
+    object-fit: cover;
+  }
 }
 
 .volume-subtitle {
@@ -494,9 +514,9 @@ img {
 }
 
 .featured {
-  grid-column: span 2;
+  grid-column: 1 / -1; /* Makes it span the full width of the row */
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 0.8fr 1.2fr;
   align-items: stretch;
 }
 
