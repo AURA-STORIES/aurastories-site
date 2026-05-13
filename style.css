@@ -100,6 +100,22 @@ img { display: block; max-width: 100%; }
 .tagline { margin: 1.3rem 0 0.2rem; font-size: clamp(1.25rem, 3vw, 1.75rem); font-weight: 600; color: #f3deae; }
 .tagline-tamil { font-family: "Noto Serif Tamil", serif; font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(249, 238, 212, 0.9); }
 
+/* --- PEEK-A-BOO HERO CARD OFFSET --- */
+.hero-card {
+  justify-self: end;
+  max-width: 360px;
+  width: 100%;
+  /* Shift the book 15% to the right to reveal background details */
+  transform: translateX(15%); 
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 2;
+}
+
+/* Slide book back into full view when the hero section is hovered */
+.hero:hover .hero-card {
+  transform: translateX(0);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -180,4 +196,6 @@ img { display: block; max-width: 100%; }
   .hero-content, .featured, .two-col, .two-col.reverse { grid-template-columns: 1fr; }
   .connect-grid { grid-template-columns: 1fr; }
   .featured-cover-wrap { height: 400px; }
+  /* Remove peek-a-boo offset on smaller screens for better centered layout */
+  .hero-card { transform: translateX(0); margin: 0 auto; }
 }
