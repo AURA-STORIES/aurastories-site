@@ -1,1 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bride & Groom - Reception Invite</title>
 
+    <!-- ========================================== -->
+    <!-- WHATSAPP & SOCIAL MEDIA PREVIEW (OPEN GRAPH) -->
+    <!-- ========================================== -->
+    <meta property="og:title" content="You are Invited! | Bride & Groom" />
+    <meta property="og:description" content="Join us for our Reception on 30th Feb 2027. Click to unlock the interactive invite! ✨" />
+    <meta property="og:image" content="image_720b4d.jpg" /> 
+    <meta property="og:type" content="website" />
+
+    <!-- Tailwind CSS & Animate.css -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/41.1.min.css"/>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a; 
+            color: #eeeeee;
+            overflow-x: hidden;
+        }
+        
+        /* Immersive Full-Screen Background Layout using image_57325f.jpg */
+        .bg-brindhavan {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('image_57325f.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        /* Dark glass overlay for sharp text contrast */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.55);
+            z-index: 1;
+        }
+
+        .serif-font {
+            font-family: 'Cinzel', serif;
+        }
+        .glow-effect {
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.2);
+        }
+        .hidden-step {
+            display: none !important;
+        }
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .interactive-container {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Fixed Brindhavan Background Artwork Block -->
+    <div class="bg-brindhavan"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Interactive Background Particles -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- Optional BGM Audio -->
+    <audio id="bgMusic" src="bgm.mp3" loop></audio>
+    <button onclick="toggleMusic()" id="musicBtn" class="fixed top-4 right-4 z-50 p-2.5 bg-neutral-900/80 border border-neutral-800 text-amber-500 rounded-full shadow-lg text-xs tracking-wider uppercase backdrop-blur-sm active:scale-95">
+        🪈 Brindavan Melody
+    </button>
+
+    <!-- Feedback Popup Message Box -->
+    <div id="funnyPopup" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold hidden-step animate__animated">
+        <p id="popupText">Wrong answer!</p>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="w-full max-w-md interactive-container flex items-center justify-center min-h-screen py-8">
+
+        <!-- ========================================== -->
+        <!-- STEP 1: CHOOSE YOUR SIDE                   -->
+        <!-- ========================================== -->
+        <div id="stepSide" class="w-full p-8 text-center border bg-neutral-950/65 backdrop-blur-lg border-neutral-800/80 rounded-2xl glow-effect animate__animated animate__fadeInUp">
+<h3 style="font-size:32px;color:#f59e0b;font-style:italic;margin-bottom:20px;">யாமிருக்க பயமேன்</h3>
+<p class="text-white serif-font text-xl">Bride</p>
+<p class="text-amber-500 text-lg">&</p>
+<p class="text-white serif-font text-xl mb-4">Groom</p>
+<p class="text-neutral-400 text-xs mb-6">Reception 2027</p>
+            <h2 class="text-3xl font-light tracking-wide text-white serif-font mb-3">Welcome!</h2>
+            
+            <!-- Flute Monogram Separator Layout -->
+            <div class="flex items-center justify-center space-x-1 mb-8">
+                <span class="text-4xl font-bold text-amber-500 serif-font">J</span>
+                <span class="text-2xl inline-block transform rotate-[-15deg] mx-0.5 opacity-80">🪈</span>
+                <span class="text-4xl font-bold text-amber-500 serif-font">K</span>
+            </div>
+            
+            <p class="text-sm text-neutral-400 mb-6 font-light">Whose side are you officially on? Choose wisely!</p>
+            
+            <div class="space-y-3">
+                <button onclick="selectSide('Groom')" class="w-full py-3.5 text-sm font-medium tracking-wider uppercase border border-neutral-800 rounded-xl bg-neutral-900/60 hover:border-amber-500 hover:text-amber-400 transition-all duration-300 active:scale-95 cursor-pointer">
+                    🤵 Team Groom
+                </button>
+                <button onclick="selectSide('Bride')" class="w-full py-3.5 text-sm font-medium tracking-wider uppercase border border-neutral-800 rounded-xl bg-neutral-900/60 hover:border-amber-500 hover:text-amber-400 transition-all duration-300 active:scale-95 cursor-pointer">
+                    👰 Team Bride
+                </button>
+            </div>
+
+            <!-- Direct Venue Button Layout -->
+            <div class="mt-8 pt-6 border-t border-neutral-800/60">
+                <button onclick="showLocation('stepSide')" class="text-xs tracking-wider text-neutral-400 hover:text-amber-500 transition duration-200 underline underline-offset-4">
+                    View Venue & QR Code Directly 📍
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 2: THE FUNNY QUIZ (STREAMLINED)       -->
+        <!-- ========================================== -->
+        <div id="stepQuiz" class="w-full p-8 text-center border bg-neutral-950/65 backdrop-blur-lg border-neutral-800/80 rounded-2xl glow-effect hidden-step animate__animated">
+            <h2 class="text-xl font-light tracking-wide text-white serif-font mb-6">Let's see how smart you are...</h2>
+            
+            <!-- Question 1 -->
+                <div id="q1" class="space-y-4">
+                    <p class="text-base text-neutral-300 font-light">
+                        What brings people together?
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+
+                        <button onclick="wrongAnswer('Money helps 😄')"
+                        class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">
+                            💰 Money
+                        </button>
+
+                        <button onclick="foodAnswer()"
+                        class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">
+                            🍛 Food
+                        </button>
+
+                        <button onclick="correctAnswer1()"
+                        class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:text-amber-400">
+                            ❤️ Love
+                        </button>
+
+                        <button onclick="wrongAnswer('Traffic separates 🤣')"
+                        class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">
+                            🚦 Traffic
+                        </button>
+
+                    </div>
+                </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- INTERLUDE: DIVINE REVEAL IMAGE SCREEN      -->
+        <!-- Verbatim referenced file: image_672988.jpg -->
+        <!-- ========================================== -->
+
+        <!-- ========================================== -->
+        <!-- STEP 3: THE MAIN RECEPTION INVITATION      -->
+        <!-- ========================================== -->
+        <div id="stepInvite" class="w-full p-8 text-center border bg-neutral-950/65 backdrop-blur-lg border-neutral-800/60 rounded-2xl glow-effect hidden-step animate__animated">
+            
+            <!-- Dynamic Custom Side Greeting Badge -->
+            <div class="mb-6 animate__animated animate__zoomIn">
+                <span id="sideBadge" class="text-[10px] tracking-[0.3em] text-amber-500 uppercase font-semibold border border-amber-500/30 px-3 py-1 rounded-full bg-amber-500/5">Special Guest</span>
+                <div class="w-12 h-[1px] bg-amber-500/40 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Names Section -->
+            <div class="space-y-2 mb-4">
+                <h2 class="text-2xl font-medium tracking-wide text-white serif-font uppercase">Groom</h2>
+                <div class="text-2xl font-light text-amber-500/60 serif-font">&</div>
+                <h2 class="text-2xl font-medium tracking-wide text-white serif-font uppercase">Bride</h2>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-base font-medium tracking-[0.2em] text-amber-500/90 serif-font mt-6 mb-2 uppercase">
+                Invitation
+            </h1>
+            
+            <p class="text-xs font-light leading-relaxed tracking-wide text-neutral-400 max-w-[280px] mx-auto">
+                Please join us for an evening of joy, laughter, and celebration as we mark the beginning of our new journey together.
+            </p>
+
+            <div class="my-6 text-xl tracking-widest text-neutral-700 font-light">
+                •   •   •
+            </div>
+
+            <!-- Details Section -->
+            <div class="space-y-5">
+                <div>
+                    <p class="text-[10px] tracking-[0.2em] text-neutral-500 uppercase font-medium mb-1">When</p>
+                    <p class="text-xl font-medium text-amber-400 serif-font">30 - Feb - 2027</p>
+                    <p id="receptionTimeText"
+                       class="text-xs text-neutral-400 mt-0.5">
+                       Loading...
+                    </p>
+                </div>
+                
+                <div class="pt-5 border-t border-neutral-800/50">
+                    <p class="text-[10px] tracking-[0.2em] text-neutral-500 uppercase font-medium mb-1">Where</p>
+                    <p class="text-base text-neutral-200 font-medium leading-snug">
+                        Hall<br>sydney
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Button Area -->
+            <div class="mt-8 space-y-3">
+                <button onclick="showLocation('stepInvite')" class="w-full inline-block px-8 py-3.5 text-xs tracking-[0.15em] uppercase transition-all duration-300 border rounded-full bg-amber-500 text-neutral-950 font-bold border-amber-500 hover:bg-transparent hover:text-amber-400 active:scale-95 cursor-pointer">
+                    View Full Address & QR Code
+                </button>
+            </div>
+
+            
+<div class="mt-6 p-3 border border-neutral-800 rounded-xl">
+<p class="text-amber-400 text-sm mb-2"> Begins In</p>
+<div id="countdown" class="text-white font-bold">Loading...</div>
+</div>
+<p id="receptionSummary"
+   class="mt-4 text-neutral-400 text-xs">
+   Loading...
+</p>
+
+<p class="mt-8 text-[10px] tracking-widest text-neutral-500 uppercase italic">
+
+                "With Best Compliments From Both Families"
+            </p>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 4: SEPARATE LOCATION & QR VIEW        -->
+        <!-- ========================================== -->
+        <div id="stepLocation" class="w-full p-8 text-center border bg-neutral-950/65 backdrop-blur-lg border-neutral-800/60 rounded-2xl glow-effect hidden-step animate__animated">
+            
+            <!-- Context Match Navigation Action Bar -->
+            <div class="flex items-center justify-between mb-6 pb-2 border-b border-neutral-800/40">
+                <button onclick="goBackFromLocation()" class="px-4 py-1.5 text-xs font-semibold uppercase bg-amber-500 text-neutral-950 rounded-full hover:bg-amber-400 transition active:scale-95">
+                    ‹ Back
+                </button>
+                <h3 class="text-lg font-normal tracking-wider text-white serif-font uppercase">Venue</h3>
+                <div class="w-14"></div>
+            </div>
+
+            <h4 class="text-base font-medium text-neutral-200 serif-font mb-2">Sydney</h4>
+            
+            <p class="text-xs text-neutral-400 leading-relaxed max-w-[260px] mx-auto mb-6">
+                Sydney<br>
+            </p>
+
+            <!-- Location Scan QR Code Image Component -->
+            <div class="w-48 h-48 bg-white p-2 mx-auto rounded-xl shadow-inner flex items-center justify-center mb-6">
+                <img src="image_720b4d.jpg" alt="Venue Location QR Code" class="w-full h-full object-contain rounded-lg">
+            </div>
+
+            <!-- Stylized Pin Layout Accent -->
+            <div class="flex justify-center items-center my-4 text-amber-500/80 animate-pulse">
+
+            </div>
+            
+            <div class="space-y-4 mt-2">
+                <a href="https://maps.app.goo.gl/vkti7KqtMqaP8bjC8" target="_blank" class="w-full block px-6 py-2.5 text-xs tracking-wider uppercase bg-neutral-800/80 border border-neutral-700 text-neutral-200 rounded-full hover:border-amber-500 hover:text-amber-400 transition-all duration-300 font-medium">
+                    Open in Google Maps 🚀
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- INTERACTIVE JAVASCRIPT LOGIC               -->
+    <!-- ========================================== -->
+    <script>
+        let previousScreen = "stepSide";
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Audio play interaction handled"));
+                btn.innerText = "❚❚ Pause Melody";
+            } else {
+                audio.pause();
+                btn.innerText = "🪈 Brindavan Melody";
+            }
+        }
+
+        function selectSide(side) {
+            const audio = document.getElementById('bgMusic');
+            if(audio.paused) { audio.play().catch(e => {}); document.getElementById('musicBtn').innerText = "❚❚ Pause Melody"; }
+            
+            let message = "Welcome! Super happy to have you join our celebration! ✨";
+            triggerPopup(message, true);
+            
+            document.getElementById('sideBadge').innerText = `${side}'s Special Guest`;
+            const stepSide = document.getElementById('stepSide');
+            stepSide.classList.add('animate__fadeOutDown');
+            
+            setTimeout(() => {
+                stepSide.classList.add('hidden-step');
+                const stepQuiz = document.getElementById('stepQuiz');
+                stepQuiz.classList.remove('hidden-step');
+                stepQuiz.classList.add('animate__fadeInUp');
+            }, 500);
+        }
+
+        // Correct Answer 1 triggers success and takes them straight to the divine transition
+        function correctAnswer1() {
+
+            triggerPopup("Love wins ❤️", true);
+
+            setTimeout(() => {
+
+                document.getElementById('stepQuiz').classList.add('hidden-step');
+
+                const stepInvite =
+                    document.getElementById('stepInvite');
+
+                stepInvite.classList.remove('hidden-step');
+
+                stepInvite.classList.add(
+                    'animate__animated',
+                    'animate__zoomIn'
+                );
+
+            }, 1200);
+        }
+
+        function foodAnswer() {
+
+            triggerPopup(
+                "Honestly... many guests came for the biryani first 😋",
+                true
+            );
+
+            setTimeout(() => {
+
+                triggerPopup(
+                    "But love brought everyone together ❤️",
+                    true
+                );
+
+                setTimeout(() => {
+
+                    document.getElementById('stepQuiz')
+                        .classList.add('hidden-step');
+
+                    const stepInvite =
+                        document.getElementById('stepInvite');
+
+                    stepInvite.classList.remove('hidden-step');
+
+                    stepInvite.classList.add(
+                        'animate__animated',
+                        'animate__zoomIn'
+                    );
+
+                }, 1500);
+
+            }, 1500);
+
+        }
+
+        function wrongAnswer(message) {
+            triggerPopup(message, false);
+        }
+
+        function triggerPopup(message, isPositive) {
+            const popup = document.getElementById('funnyPopup');
+            const txt = document.getElementById('popupText');
+            txt.innerText = message;
+            
+            if(isPositive) {
+                popup.className = "fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold bg-neutral-900 border border-amber-500/40 text-amber-400 animate__animated";
+            } else {
+                popup.className = "fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold bg-amber-500 text-neutral-950 animate__animated";
+            }
+            
+            popup.classList.remove('hidden-step', 'animate__fadeOutUp');
+            popup.classList.add('animate__fadeInDown');
+            
+            setTimeout(() => {
+                popup.classList.remove('animate__fadeInDown');
+                popup.classList.add('animate__fadeOutUp');
+                setTimeout(() => { popup.classList.add('hidden-step'); }, 500);
+            }, 2500);
+        }
+
+
+        function showLocation(currentScreenId) {
+            previousScreen = currentScreenId;
+            const currentElement = document.getElementById(currentScreenId);
+            currentElement.classList.add('animate__fadeOut');
+            
+            setTimeout(() => {
+                currentElement.classList.add('hidden-step');
+                currentElement.classList.remove('animate__fadeOut');
+                const locScreen = document.getElementById('stepLocation');
+                locScreen.classList.remove('hidden-step');
+                locScreen.classList.add('animate__fadeIn');
+            }, 400);
+        }
+
+        function goBackFromLocation() {
+            const locScreen = document.getElementById('stepLocation');
+            locScreen.classList.add('animate__fadeOut');
+            
+            setTimeout(() => {
+                locScreen.classList.add('hidden-step');
+                locScreen.classList.remove('animate__fadeOut');
+                const prevElement = document.getElementById(previousScreen);
+                prevElement.classList.remove('hidden-step');
+                prevElement.classList.add('animate__fadeIn');
+            }, 400);
+        }
+
+        // ==========================================
+        // AMBER SPARKS STARRY NIGHT BACKGROUND CANVAS 
+        // ==========================================
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let mouse = { x: null, y: null, radius: 110 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.min(Math.floor(window.innerWidth * 0.15), 140);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 1.6 + 0.4,
+                    speedX: (Math.random() - 0.5) * 0.22,
+                    speedY: (Math.random() - 0.5) * 0.22,
+                    alpha: Math.random(),
+                    fadeSpeed: Math.random() * 0.009 + 0.004
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.alpha += star.fadeSpeed;
+                if (star.alpha > 1 || star.alpha < 0) star.fadeSpeed = -star.fadeSpeed;
+                if(star.alpha < 0) star.alpha = 0;
+
+                star.x += star.speedX;
+                star.y += star.speedY;
+
+                if (star.x < 0) star.x = canvas.width;
+                if (star.x > canvas.width) star.x = 0;
+                if (star.y < 0) star.y = canvas.height;
+                if (star.y > canvas.height) star.y = 0;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = star.x - mouse.x;
+                    let dy = star.y - mouse.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        star.x += (dx / distance) * force * 1.8;
+                        star.y += (dy / distance) * force * 1.8;
+                    }
+                }
+                ctx.fillStyle = `rgba(245, 158, 11, ${star.alpha})`; 
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('resize', resizeCanvas);
+
+        resizeCanvas();
+        drawStars();
+    
+// ==========================================
+// RECEPTION DATE & TIME SETTINGS
+// Only change the time variables below
+// ==========================================
+
+const RECEPTION_YEAR = 2026;
+const RECEPTION_MONTH = 8;
+const RECEPTION_DAY = 24;
+
+const RECEPTION_HOUR = 18;
+const RECEPTION_MINUTE = 0;
+const RECEPTION_SECOND = 0;
+
+// ==========================================
+// DYNAMIC DATE/TIME GENERATION
+// ==========================================
+
+const receptionDate = new Date(
+    RECEPTION_YEAR,
+    RECEPTION_MONTH - 1,
+    RECEPTION_DAY,
+    RECEPTION_HOUR,
+    RECEPTION_MINUTE,
+    RECEPTION_SECOND
+);
+
+function formatTime12Hour(hour, minute) {
+    const ampm = hour >= 12 ? "PM" : "AM";
+    const h = hour % 12 || 12;
+    const m = String(minute).padStart(2, "0");
+    return `${h}:${m} ${ampm}`;
+}
+
+function updateReceptionTexts() {
+
+    const dateOptions = {
+        weekday: 'long'
+    };
+
+    const weekday = receptionDate.toLocaleDateString(
+        'en-US',
+        dateOptions
+    );
+
+    const timeText =
+        formatTime12Hour(
+            RECEPTION_HOUR,
+            RECEPTION_MINUTE
+        );
+
+    const whenText =
+        document.getElementById('receptionTimeText');
+
+    if (whenText) {
+        whenText.textContent =
+            `${timeText} Onwards`;
+    }
+
+    const summaryText =
+        document.getElementById('receptionSummary');
+
+    if (summaryText) {
+        summaryText.textContent =
+            `📅 ${weekday} • 🕖 ${timeText} • 📍 Dindigul • 🚗 Parking Available`;
+    }
+}
+
+function updateCountdown() {
+
+    const countdown =
+        document.getElementById('countdown');
+
+    if (!countdown) return;
+
+    const now = new Date();
+
+    const diff =
+        receptionDate.getTime() - now.getTime();
+
+    const eventEnd = new Date(
+        RECEPTION_YEAR,
+        RECEPTION_MONTH - 1,
+        RECEPTION_DAY + 1,
+        0,
+        0,
+        0
+    );
+
+if (diff <= 0) {
+
+    if (now > eventEnd) {
+        countdown.innerHTML =
+            "🙏 Thank You For Celebrating With Us";
+    } else {
+        countdown.innerHTML =
+            "🎉 Reception Has Started!";
+    }
+
+    return;
+}
+
+    const days =
+        Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    const hours =
+        Math.floor(
+            (diff % (1000 * 60 * 60 * 24))
+            / (1000 * 60 * 60)
+        );
+
+    const minutes =
+        Math.floor(
+            (diff % (1000 * 60 * 60))
+            / (1000 * 60)
+        );
+
+    const seconds =
+        Math.floor(
+            (diff % (1000 * 60))
+            / 1000
+        );
+
+    if (days > 0) {
+
+        countdown.innerHTML =
+            `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+
+    }
+    else if (hours > 0) {
+
+        countdown.innerHTML =
+            `${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+
+    }
+    else if (minutes > 0) {
+
+        countdown.innerHTML =
+            `${minutes} Minutes ${seconds} Seconds`;
+
+    }
+    else {
+
+        countdown.innerHTML =
+            `${seconds} Seconds`;
+
+    }
+    } 
+
+updateReceptionTexts();
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
+
+</script>
+</body>
+</html>
