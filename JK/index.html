@@ -88,7 +88,7 @@
     <!-- Optional BGM Audio -->
     <audio id="bgMusic" src="bgm.mp3" loop></audio>
     <button onclick="toggleMusic()" id="musicBtn" class="fixed top-4 right-4 z-50 p-2.5 bg-neutral-900/80 border border-neutral-800 text-amber-500 rounded-full shadow-lg text-xs tracking-wider uppercase backdrop-blur-sm active:scale-95">
-        🪈 Brindavan Melody
+        🪈 Music
     </button>
 
     <!-- Feedback Popup Message Box -->
@@ -303,10 +303,10 @@
             const btn = document.getElementById('musicBtn');
             if (audio.paused) {
                 audio.play().catch(e => console.log("Audio play interaction handled"));
-                btn.innerText = "❚❚ Pause Melody";
+                btn.innerText = "❚❚ Music";
             } else {
                 audio.pause();
-                btn.innerText = "🪈 Brindavan Melody";
+                btn.innerText = "🪈 Music";
             }
         }
 
