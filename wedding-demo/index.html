@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arjun & Meera — Fictional Wedding Demo</title>
+
+    <meta property="og:title" content="Arjun & Meera | Fictional Wedding Demo" />
+    <meta property="og:description" content="Explore a sample interactive wedding invitation by Aura Stories. All details are fictional." />
+    <meta property="og:image" content="image_57325f.jpg" />
+    <meta property="og:type" content="website" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Noto+Serif+Tamil:wght@400;600&display=swap');
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #eeeeee;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .bg-brindhavan {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('image_57325f.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        .bg-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.60);
+            z-index: 1;
+        }
+
+        .serif-font { font-family: 'Cinzel', serif; }
+        .tamil-font { font-family: 'Noto Serif Tamil', serif; }
+
+        .glow-effect { box-shadow: 0 0 35px rgba(245, 158, 11, 0.2); }
+        .hidden-step { display: none !important; }
+
+        #starCanvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .interactive-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ── LANDING SCREEN ── */
+        #stepLanding {
+            position: fixed; inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(8,6,3,0.92);
+            padding: 2rem;
+        }
+
+        .landing-bg {
+            position: absolute; inset: 0;
+            background-image: url('muruga1.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.18;
+            z-index: 0;
+        }
+
+        .landing-content { position: relative; z-index: 1; }
+
+        .landing-tamil {
+            font-family: 'Noto Serif Tamil', serif;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            color: #f59e0b;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.04em;
+            text-shadow: 0 0 30px rgba(245,158,11,0.5);
+        }
+
+        .landing-names {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
+            color: #fff;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.5rem;
+        }
+
+        .landing-year {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: #a16207;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .tap-enter-btn {
+            display: inline-block;
+            padding: 0.85rem 2.5rem;
+            border: 1px solid #f59e0b;
+            border-radius: 50px;
+            color: #f59e0b;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: rgba(245,158,11,0.06);
+            transition: all 0.3s;
+            animation: pulse-border 2.5s infinite;
+        }
+
+        .tap-enter-btn:hover, .tap-enter-btn:active {
+            background: rgba(245,158,11,0.15);
+            transform: scale(0.97);
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+        }
+
+        /* ── DIVINE REVEAL INTERLUDE ── */
+        #divineReveal {
+            position: fixed; inset: 0;
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #divineReveal.active {
+            pointer-events: all;
+        }
+
+        .divine-img {
+            width: 100%; height: 100%;
+            position: absolute; inset: 0;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 1.2s ease, transform 4s ease;
+        }
+
+        .divine-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .divine-blessing {
+            font-family: 'Cinzel', serif;
+            color: #f5e0a0;
+            font-size: clamp(0.75rem, 3vw, 1rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 20px rgba(245,220,120,0.8);
+        }
+
+        .divine-tamil {
+            font-family: 'Noto Serif Tamil', serif;
+            color: #fbbf24;
+            font-size: clamp(1.6rem, 6vw, 2.4rem);
+            text-shadow: 0 0 40px rgba(251,191,36,0.9);
+        }
+
+        /* ── COUPLE PHOTO SECTION ── */
+        .couple-photo-section {
+            margin: 1.5rem 0 0.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .couple-photo-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgba(245,158,11,0.5);
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(245,158,11,0.25);
+            background: #1a1a1a;
+        }
+
+        .couple-photo-frame img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        /* ── BLESSING TEXT ── */
+        .blessing-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            color: #78716c;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 1.2rem 0 0;
+        }
+
+        /* ── COUNTDOWN STYLE ── */
+        #countdown {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            color: #fff;
+            line-height: 1.7;
+        }
+
+        /* ── VENUE QUICK FACTS ── */
+        .venue-facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin: 0.8rem 0;
+        }
+
+        .venue-fact-pill {
+            background: rgba(245,158,11,0.07);
+            border: 1px solid rgba(245,158,11,0.18);
+            border-radius: 10px;
+            padding: 0.5rem 0.6rem;
+            font-size: 0.72rem;
+            color: #d4b896;
+            text-align: center;
+        }
+
+        /* ── CONTACT CARDS ── */
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(245,158,11,0.06);
+            border: 1px solid rgba(245,158,11,0.15);
+            border-radius: 10px;
+            padding: 0.65rem 1rem;
+        }
+
+        .contact-card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: #f5e0a0;
+        }
+
+        .contact-card-number {
+            font-size: 0.78rem;
+            color: #a16207;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── THANK YOU SCREEN ── */
+        #stepThankYou {
+            text-align: center;
+        }
+
+        .thankyou-heart {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+            animation: heartbeat 1.8s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+            80% { transform: scale(1.08); }
+        }
+
+        /* ── MUSIC BUTTON ── */
+        #musicBtn {
+            position: fixed; top: 1rem; right: 1rem;
+            z-index: 200;
+            padding: 0.55rem 1rem;
+            background: rgba(10,10,10,0.85);
+            border: 1px solid #262626;
+            color: #f59e0b;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+        }
+
+        #musicBtn:active { transform: scale(0.95); }
+
+        /* ── CARD BASE ── */
+        .inv-card {
+            width: 100%;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(38,38,38,0.8);
+            background: rgba(10,10,10,0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 1.25rem;
+            box-shadow: 0 0 35px rgba(245,158,11,0.2);
+        }
+
+        @media (max-width: 400px) {
+            .inv-card { padding: 1.5rem 1.2rem; }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+    <!-- Fixed Background -->
+    <div class="bg-brindhavan"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Stars -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- BGM -->
+    <audio id="bgMusic" src="bgm.mp3" loop></audio>
+    <button onclick="toggleMusic()" id="musicBtn">🪈 Melody</button>
+
+    <!-- Feedback Popup -->
+    <div id="funnyPopup" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold hidden-step animate__animated">
+        <p id="popupText"></p>
+    </div>
+
+    <!-- ══════════════════════════════════ -->
+    <!-- LANDING SCREEN                    -->
+    <!-- ══════════════════════════════════ -->
+    <div id="stepLanding">
+        <div class="landing-bg"></div>
+        <div class="landing-content animate__animated animate__fadeIn">
+            <div class="landing-tamil">யாமிருக்க பயமேன்</div>
+            <div class="landing-names">Arjun &amp; Meera</div>
+            <div class="landing-year">Sample Celebration · 2027</div>
+            <p class="text-xs text-neutral-400 max-w-xs mx-auto mb-6">Sample wedding website by Aura Stories. All names, event details and locations are fictional.</p>
+            <button class="tap-enter-btn" onclick="enterSite()">✦ Tap to Enter ✦</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════ -->
+    <!-- DIVINE REVEAL INTERLUDE           -->
+    <!-- ══════════════════════════════════ -->
+    <div id="divineReveal">
+        <img id="divineImg" class="divine-img" src="muruga.jpg" alt="Lord Murugan">
+        <div class="divine-text" id="divineText">
+            <div class="divine-blessing">With the Blessings of Lord Murugan</div>
+            <div class="divine-tamil">யாமிருக்க பயமேன்</div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════ -->
+    <!-- MAIN INTERACTIVE CONTAINER        -->
+    <!-- ══════════════════════════════════ -->
+    <div class="w-full max-w-md interactive-container flex items-center justify-center min-h-screen py-8 px-4">
+
+        <!-- ══ STEP 1: CHOOSE YOUR SIDE ══ -->
+        <div id="stepSide" class="inv-card hidden-step animate__animated animate__fadeInUp">
+            <p class="text-white serif-font text-xl">Arjun</p>
+            <p class="text-amber-500 text-lg">&amp;</p>
+            <p class="text-white serif-font text-xl mb-1">Meera</p>
+            <p class="text-neutral-500 text-xs mb-6 tracking-widest uppercase">Sample Celebration · 2027</p>
+
+            <h2 class="text-3xl font-light tracking-wide text-white serif-font mb-3">Welcome!</h2>
+
+            <div class="flex items-center justify-center space-x-1 mb-8">
+                <span class="text-4xl font-bold text-amber-500 serif-font">A</span>
+                <span class="text-2xl inline-block transform rotate-[-15deg] mx-0.5 opacity-80">🪈</span>
+                <span class="text-4xl font-bold text-amber-500 serif-font">M</span>
+            </div>
+
+            <p class="text-sm text-neutral-400 mb-6 font-light">Whose side are you officially on? Choose wisely!</p>
+
+            <div class="space-y-3">
+                <button onclick="selectSide('Groom')" class="w-full py-3.5 text-sm font-medium tracking-wider uppercase border border-neutral-800 rounded-xl bg-neutral-900/60 hover:border-amber-500 hover:text-amber-400 transition-all duration-300 active:scale-95 cursor-pointer">
+                    🤵 Team Groom
+                </button>
+                <button onclick="selectSide('Bride')" class="w-full py-3.5 text-sm font-medium tracking-wider uppercase border border-neutral-800 rounded-xl bg-neutral-900/60 hover:border-amber-500 hover:text-amber-400 transition-all duration-300 active:scale-95 cursor-pointer">
+                    👰 Team Bride
+                </button>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-neutral-800/60">
+                <button onclick="showLocation('stepSide')" class="text-xs tracking-wider text-neutral-400 hover:text-amber-500 transition duration-200 underline underline-offset-4">
+                    View Venue &amp; QR Code Directly 📍
+                </button>
+            </div>
+        </div>
+
+        <!-- ══ STEP 2: QUIZ ══ -->
+        <div id="stepQuiz" class="inv-card hidden-step animate__animated">
+            <h2 class="text-xl font-light tracking-wide text-white serif-font mb-2">A little quiz...</h2>
+            <p class="text-neutral-500 text-xs mb-6 tracking-wider">Answer correctly to unlock the invite ✨</p>
+
+            <div id="q1" class="space-y-4">
+                <p class="text-base text-neutral-300 font-light">What brings people together?</p>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="wrongAnswer('Money helps 😄')" class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">💰 Money</button>
+                    <button onclick="foodAnswer()" class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">🍛 Food</button>
+                    <button onclick="correctAnswer1()" class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:text-amber-400">❤️ Love</button>
+                    <button onclick="wrongAnswer('Traffic separates 🤣')" class="p-3.5 text-xs tracking-wider uppercase bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-neutral-700">🚦 Traffic</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 3: MAIN INVITATION ══ -->
+        <div id="stepInvite" class="inv-card hidden-step animate__animated">
+
+            <div class="mb-5 animate__animated animate__zoomIn">
+                <span id="sideBadge" class="text-[10px] tracking-[0.3em] text-amber-500 uppercase font-semibold border border-amber-500/30 px-3 py-1 rounded-full bg-amber-500/5">Special Guest</span>
+                <div class="w-12 h-[1px] bg-amber-500/40 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Couple Photo -->
+            <div class="couple-photo-section">
+                <div class="couple-photo-frame">
+                    <img src="image_57325f.jpg" alt="Illustration of a fictional couple">
+                </div>
+            </div>
+
+            <!-- Blessing -->
+            <p class="blessing-text">With the blessings of our families</p>
+
+            <!-- Names -->
+            <div class="space-y-2 mt-5 mb-4">
+                <h2 class="text-2xl font-medium tracking-wide text-white serif-font uppercase">Arjun</h2>
+                <div class="text-2xl font-light text-amber-500/60 serif-font">&amp;</div>
+                <h2 class="text-2xl font-medium tracking-wide text-white serif-font uppercase">Meera</h2>
+            </div>
+
+            <h1 class="text-base font-medium tracking-[0.2em] text-amber-500/90 serif-font mt-5 mb-2 uppercase">Reception Invitation</h1>
+
+            <p class="text-xs font-light leading-relaxed tracking-wide text-neutral-400 max-w-[280px] mx-auto">
+                Please join us for an evening of joy, laughter, and celebration as we mark the beginning of our new journey together.
+            </p>
+
+            <div class="my-5 text-xl tracking-widest text-neutral-700 font-light">•   •   •</div>
+
+            <!-- Details -->
+            <div class="space-y-5">
+                <div>
+                    <p class="text-[10px] tracking-[0.2em] text-neutral-500 uppercase font-medium mb-1">When</p>
+                    <p class="text-xl font-medium text-amber-400 serif-font">14 - Feb - 2027 · Sample Date</p>
+                    <p id="receptionTimeText" class="text-xs text-neutral-400 mt-0.5">Loading...</p>
+                </div>
+
+                <div class="pt-5 border-t border-neutral-800/50">
+                    <p class="text-[10px] tracking-[0.2em] text-neutral-500 uppercase font-medium mb-1">Where</p>
+                    <p class="text-base text-neutral-200 font-medium leading-snug">The Blossom Pavilion<br>Example City</p>
+                </div>
+            </div>
+
+            <!-- Countdown -->
+            <div class="mt-5 p-3 border border-neutral-800 rounded-xl">
+                <p class="text-amber-400 text-sm mb-2">Reception Begins In</p>
+                <div id="countdown" class="text-white font-bold">Loading...</div>
+            </div>
+
+            <!-- Venue Quick Facts in Location View -->
+            <div class="venue-facts mb-5">
+                <div class="venue-fact-pill">📅 Sunday</div>
+                <div class="venue-fact-pill">🕖 6:00 PM</div>
+                <div class="venue-fact-pill">📍 Example City</div>
+                <div class="venue-fact-pill">🚗 Parking</div>
+            </div>
+
+
+            <!-- CTA -->
+            <div class="mt-6">
+                <button onclick="showLocation('stepInvite')" class="w-full inline-block px-8 py-3.5 text-xs tracking-[0.15em] uppercase transition-all duration-300 border rounded-full bg-amber-500 text-neutral-950 font-bold border-amber-500 hover:bg-transparent hover:text-amber-400 active:scale-95 cursor-pointer">
+                    View Full Address &amp; QR Code
+                </button>
+            </div>
+        </div>
+
+        <!-- ══ STEP 4: VENUE & QR ══ -->
+        <div id="stepLocation" class="inv-card hidden-step animate__animated">
+
+            <div class="flex items-center justify-between mb-6 pb-2 border-b border-neutral-800/40">
+                <button onclick="goBackFromLocation()" class="px-4 py-1.5 text-xs font-semibold uppercase bg-amber-500 text-neutral-950 rounded-full hover:bg-amber-400 transition active:scale-95">‹ Back</button>
+                <h3 class="text-lg font-normal tracking-wider text-white serif-font uppercase">Venue</h3>
+                <div class="w-14"></div>
+            </div>
+
+            <h4 class="text-base font-medium text-neutral-200 serif-font mb-2">The Blossom Pavilion — Fictional Venue</h4>
+
+            <p class="text-xs text-neutral-400 leading-relaxed max-w-[260px] mx-auto mb-5">
+                123 Celebration Lane,<br>Example City — Sample Address
+            </p>
+
+
+
+            <p class="text-xs text-amber-400 mb-5">Map and QR code omitted from this fictional demo.</p>
+
+            <div class="space-y-3 mt-2">
+                <button onclick="showThankYou()" class="w-full py-2.5 text-xs tracking-wider uppercase border border-amber-500/30 rounded-full text-amber-400 hover:bg-amber-500/10 transition">
+                    💌 Thank You
+                </button>
+            </div>
+
+            <!-- Help Contact Cards -->
+            <div class="mt-6 pt-4 border-t border-neutral-800/40">
+                <p class="text-xs text-neutral-400">Contact details available on the actual invitation.</p>
+            </div>
+        </div>
+
+        <!-- ══ STEP 5: THANK YOU ══ -->
+        <div id="stepThankYou" class="inv-card hidden-step animate__animated">
+            <span class="thankyou-heart">❤️</span>
+            <h2 class="serif-font text-2xl text-white tracking-wider mb-3">Thank You</h2>
+            <p class="text-neutral-400 text-sm leading-relaxed mb-4 max-w-[260px] mx-auto">
+                Your presence on our special day means the world to us. We can't wait to celebrate with you!
+            </p>
+            <div class="my-4 text-xl tracking-widest text-neutral-700">•   •   •</div>
+
+            <p class="mt-5 text-[10px] tracking-widest text-neutral-500 uppercase italic">"With Best Compliments From Both Families"</p>
+
+            <div class="mt-6 pt-5 border-t border-neutral-800/40">
+                <button onclick="showLocation('stepThankYou')" class="w-full py-3 text-xs tracking-wider uppercase border border-amber-500/30 rounded-full text-amber-400 hover:bg-amber-500/10 transition">
+                    📍 View Venue Again
+                </button>
+            </div>
+        </div>
+
+    </div><!-- /interactive-container -->
+
+    <script>
+    // ══════════════════════════════════
+    //  STATE
+    // ══════════════════════════════════
+    let previousScreen = "stepSide";
+
+    // ══════════════════════════════════
+    //  LANDING → DIVINE → STEPSIDE
+    // ══════════════════════════════════
+    function enterSite() {
+        const landing = document.getElementById('stepLanding');
+        landing.style.opacity = '0';
+        landing.style.transition = 'opacity 0.6s ease';
+
+        setTimeout(() => {
+            landing.classList.add('hidden-step');
+            startDivineReveal();
+        }, 600);
+    }
+
+    function startDivineReveal() {
+        const reveal = document.getElementById('divineReveal');
+        const img = document.getElementById('divineImg');
+        const txt = document.getElementById('divineText');
+
+        reveal.classList.add('active');
+        reveal.style.opacity = '1';
+        reveal.style.transition = 'opacity 0.8s ease';
+
+        // Brighten image and zoom
+        setTimeout(() => {
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+        }, 300);
+
+        // Show text
+        setTimeout(() => {
+            txt.style.opacity = '1';
+        }, 1400);
+
+        // After 4 seconds total, fade out and show stepSide
+        setTimeout(() => {
+            reveal.style.opacity = '0';
+            reveal.style.transition = 'opacity 1s ease';
+            setTimeout(() => {
+                reveal.classList.add('hidden-step');
+                const stepSide = document.getElementById('stepSide');
+                stepSide.classList.remove('hidden-step');
+                stepSide.classList.add('animate__fadeInUp');
+            }, 1000);
+        }, 4000);
+    }
+
+    // ══════════════════════════════════
+    //  MUSIC
+    // ══════════════════════════════════
+    function toggleMusic() {
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+        if (audio.paused) {
+            audio.play().catch(() => {});
+            btn.innerText = "❚❚ Pause Melody";
+        } else {
+            audio.pause();
+            btn.innerText = "🪈 Melody";
+        }
+    }
+
+    // ══════════════════════════════════
+    //  SIDE SELECT
+    // ══════════════════════════════════
+    function selectSide(side) {
+        const audio = document.getElementById('bgMusic');
+        if (audio.paused) {
+            audio.play().catch(() => {});
+            document.getElementById('musicBtn').innerText = "❚❚ Pause Melody";
+        }
+        triggerPopup("Welcome! Super happy to have you join our celebration! ✨", true);
+        document.getElementById('sideBadge').innerText = `${side}'s Special Guest`;
+
+        const stepSide = document.getElementById('stepSide');
+        stepSide.classList.add('animate__fadeOutDown');
+        setTimeout(() => {
+            stepSide.classList.add('hidden-step');
+            const stepQuiz = document.getElementById('stepQuiz');
+            stepQuiz.classList.remove('hidden-step');
+            stepQuiz.classList.add('animate__fadeInUp');
+        }, 500);
+    }
+
+    // ══════════════════════════════════
+    //  QUIZ ANSWERS
+    // ══════════════════════════════════
+    function correctAnswer1() {
+        triggerPopup("Love wins ❤️", true);
+        setTimeout(() => {
+            document.getElementById('stepQuiz').classList.add('hidden-step');
+            const si = document.getElementById('stepInvite');
+            si.classList.remove('hidden-step');
+            si.classList.add('animate__animated', 'animate__zoomIn');
+        }, 1200);
+    }
+
+    function foodAnswer() {
+        triggerPopup("Honestly... many guests came for the biryani first 😋", true);
+        setTimeout(() => {
+            triggerPopup("But love brought everyone together ❤️", true);
+            setTimeout(() => {
+                document.getElementById('stepQuiz').classList.add('hidden-step');
+                const si = document.getElementById('stepInvite');
+                si.classList.remove('hidden-step');
+                si.classList.add('animate__animated', 'animate__zoomIn');
+            }, 1500);
+        }, 1500);
+    }
+
+    function wrongAnswer(message) {
+        triggerPopup(message, false);
+    }
+
+    // ══════════════════════════════════
+    //  POPUP
+    // ══════════════════════════════════
+    function triggerPopup(message, isPositive) {
+        const popup = document.getElementById('funnyPopup');
+        const txt = document.getElementById('popupText');
+        txt.innerText = message;
+
+        if (isPositive) {
+            popup.className = "fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold bg-neutral-900 border border-amber-500/40 text-amber-400 animate__animated";
+        } else {
+            popup.className = "fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-11/12 text-center px-6 py-4 rounded-xl shadow-2xl font-semibold bg-amber-500 text-neutral-950 animate__animated";
+        }
+
+        popup.classList.remove('hidden-step', 'animate__fadeOutUp');
+        popup.classList.add('animate__fadeInDown');
+
+        setTimeout(() => {
+            popup.classList.remove('animate__fadeInDown');
+            popup.classList.add('animate__fadeOutUp');
+            setTimeout(() => { popup.classList.add('hidden-step'); }, 500);
+        }, 2500);
+    }
+
+    // ══════════════════════════════════
+    //  LOCATION / BACK
+    // ══════════════════════════════════
+    function showLocation(currentScreenId) {
+        previousScreen = currentScreenId;
+        const current = document.getElementById(currentScreenId);
+        current.classList.add('animate__fadeOut');
+        setTimeout(() => {
+            current.classList.add('hidden-step');
+            current.classList.remove('animate__fadeOut');
+            const loc = document.getElementById('stepLocation');
+            loc.classList.remove('hidden-step');
+            loc.classList.add('animate__fadeIn');
+        }, 400);
+    }
+
+    function goBackFromLocation() {
+        const loc = document.getElementById('stepLocation');
+        loc.classList.add('animate__fadeOut');
+        setTimeout(() => {
+            loc.classList.add('hidden-step');
+            loc.classList.remove('animate__fadeOut');
+            // Always go back to the invite card
+            const prev = document.getElementById('stepInvite');
+            prev.classList.remove('hidden-step');
+            prev.classList.add('animate__fadeIn');
+        }, 400);
+    }
+
+    function showThankYou() {
+        // hide all main steps, show thank you
+        ['stepInvite','stepLocation'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el.classList.contains('hidden-step')) {
+                el.classList.add('animate__fadeOut');
+                setTimeout(() => {
+                    el.classList.add('hidden-step');
+                    el.classList.remove('animate__fadeOut');
+                }, 400);
+            }
+        });
+        setTimeout(() => {
+            const ty = document.getElementById('stepThankYou');
+            ty.classList.remove('hidden-step');
+            ty.classList.add('animate__fadeInUp');
+        }, 400);
+    }
+
+    function goToStart() {
+        ['stepSide','stepQuiz','stepInvite','stepLocation','stepThankYou'].forEach(id => {
+            document.getElementById(id).classList.add('hidden-step');
+        });
+        const stepSide = document.getElementById('stepSide');
+        stepSide.classList.remove('hidden-step');
+        stepSide.classList.add('animate__fadeIn');
+    }
+
+    // ══════════════════════════════════
+    //  STAR CANVAS
+    // ══════════════════════════════════
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let mouse = { x: null, y: null, radius: 110 };
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars();
+    }
+
+    function initStars() {
+        stars = [];
+        const starCount = Math.min(Math.floor(window.innerWidth * 0.15), 140);
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.6 + 0.4,
+                speedX: (Math.random() - 0.5) * 0.22,
+                speedY: (Math.random() - 0.5) * 0.22,
+                alpha: Math.random(),
+                fadeSpeed: Math.random() * 0.009 + 0.004
+            });
+        }
+    }
+
+    function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.alpha += star.fadeSpeed;
+            if (star.alpha > 1 || star.alpha < 0) star.fadeSpeed = -star.fadeSpeed;
+            if (star.alpha < 0) star.alpha = 0;
+            star.x += star.speedX;
+            star.y += star.speedY;
+            if (star.x < 0) star.x = canvas.width;
+            if (star.x > canvas.width) star.x = 0;
+            if (star.y < 0) star.y = canvas.height;
+            if (star.y > canvas.height) star.y = 0;
+
+            if (mouse.x !== null && mouse.y !== null) {
+                let dx = star.x - mouse.x, dy = star.y - mouse.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouse.radius) {
+                    let force = (mouse.radius - dist) / mouse.radius;
+                    star.x += (dx / dist) * force * 1.8;
+                    star.y += (dy / dist) * force * 1.8;
+                }
+            }
+            ctx.fillStyle = `rgba(245, 158, 11, ${star.alpha})`;
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+    window.addEventListener('touchmove', e => { if (e.touches.length) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } });
+    window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+    window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawStars();
+
+    // ══════════════════════════════════
+    //  RECEPTION DATE & COUNTDOWN
+    // ══════════════════════════════════
+    const RECEPTION_YEAR = 2027, RECEPTION_MONTH = 2, RECEPTION_DAY = 14;
+    const RECEPTION_HOUR = 18, RECEPTION_MINUTE = 0, RECEPTION_SECOND = 0;
+
+    const receptionDate = new Date(RECEPTION_YEAR, RECEPTION_MONTH - 1, RECEPTION_DAY, RECEPTION_HOUR, RECEPTION_MINUTE, RECEPTION_SECOND);
+
+    function formatTime12Hour(hour, minute) {
+        const ampm = hour >= 12 ? "PM" : "AM";
+        const h = hour % 12 || 12;
+        return `${h}:${String(minute).padStart(2,'0')} ${ampm}`;
+    }
+
+    function updateReceptionTexts() {
+        const timeText = formatTime12Hour(RECEPTION_HOUR, RECEPTION_MINUTE);
+        const whenText = document.getElementById('receptionTimeText');
+        if (whenText) whenText.textContent = `${timeText} Onwards`;
+    }
+
+    function updateCountdown() {
+        const countdown = document.getElementById('countdown');
+        if (!countdown) return;
+        const now = new Date();
+        const diff = receptionDate.getTime() - now.getTime();
+        const eventEnd = new Date(RECEPTION_YEAR, RECEPTION_MONTH - 1, RECEPTION_DAY + 1, 0, 0, 0);
+
+        if (diff <= 0) {
+            countdown.innerHTML = now > eventEnd ? "🙏 Thank You For Celebrating With Us" : "🎉 Reception Has Started!";
+            return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (days > 0) countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        else if (hours > 0) countdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        else if (minutes > 0) countdown.innerHTML = `${minutes}m ${seconds}s`;
+        else countdown.innerHTML = `${seconds}s`;
+    }
+
+    updateReceptionTexts();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
