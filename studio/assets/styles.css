@@ -1280,3 +1280,52 @@ footer p {
   color: var(--muted);
   font-size: 12px;
 }
+
+
+/* Shared Aura Stories brand — light theme */
+:root {
+  --bg: #f5efe4;
+  --paper: #fffcf6;
+  --ink: #2f271e;
+  --muted: #6f6253;
+  --line: rgba(88, 66, 37, 0.18);
+  --soft: #eee7da;
+  --gold: #e6bf7c;
+  --forest: #173c36;
+  --brand-accent: #9b7a3d;
+}
+
+/* Coordinated studio dark theme */
+html[data-theme="dark"] {
+  --bg: #101f1c;
+  --paper: #192e28;
+  --ink: #f4efdf;
+  --muted: #b1c4b8;
+  --line: #385047;
+  --soft: #243c32;
+  --gold: #e6bf7c;
+  --forest: #173c36;
+  --brand-accent: #d4b16e;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+h1,
+h2,
+.demo-info h3,
+.projects h3,
+.video-caption h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+h2 em {
+  color: var(--brand-accent);
+}
+
+/* Light gold remains readable on dark feature panels */
+.hero h1 em,
+.contact h2 em {
+  color: var(--gold);
+}
