@@ -1,0 +1,1 @@
+try{document.documentElement.dataset.theme=localStorage.getItem('aura-theme')||'light'}catch(e){}

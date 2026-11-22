@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Aura Stories · India Taking Shape — Nilgiri Mountain Railway (1891–1908)</title>
+
+  <link rel="stylesheet" href="railway.css">
+</head>
+<body>
+
+  <!-- Full-screen Three.js Canvas Container -->
+  <div id="canvas-container" aria-label="Interactive 3D civil-engineering model of the Nilgiri Mountain Railway"></div>
+
+  <!-- Top Header, Mesh Inspector Toggle & Exhibit Selector -->
+  <header class="top-chrome">
+    <div class="header-row">
+      <div class="brand-bar">
+        <a class="brand-kicker" href="../../index.html">Aura Stories</a>
+        <span class="brand-divider" aria-hidden="true">·</span>
+        <h1 class="brand-title">Nilgiri Mountain Railway</h1>
+      </div>
+
+      <div class="header-actions">
+        <button type="button" id="btn-wireframe" class="btn-ghost" aria-pressed="false" title="Toggle CAD-style structural wireframe overlay (W)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span class="hide-sm">Mesh / Wireframe</span>
+        </button>
+
+        <button type="button" aria-label="Open railway story" id="btn-sources" class="btn-ghost" aria-haspopup="dialog">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span class="story-label">Railway story</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="view-tools" aria-label="Camera controls">
+      <button id="view-mode" class="btn-ghost" aria-pressed="false">Drag · orbit</button>
+      <button id="zoom-in" class="btn-ghost" aria-label="Zoom in">+</button>
+      <button id="zoom-out" class="btn-ghost" aria-label="Zoom out">−</button>
+    </div>
+  </header>
+
+  <!-- Prominent Floating "Replay construction" Call-to-Action -->
+  <div id="hero-replay-wrap" class="hero-replay-wrap">
+    <button type="button" id="btn-hero-replay" class="btn-hero-replay">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="1 4 1 10 7 10"></polyline>
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+      </svg>
+      Build this bridge
+    </button>
+    <button type="button" id="climb" class="btn-ghost" hidden>See how it climbs</button>
+  </div>
+
+  <!-- Toast Banner -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Compact Stage Caption Card -->
+  <aside id="caption-card" class="caption-card" aria-live="polite">
+    <div class="caption-header">
+      <span id="stage-badge" class="stage-badge historical">Representative stretch · 1891–1908</span>
+      <button type="button" id="btn-caption-toggle" class="caption-toggle" aria-expanded="true">Hide</button>
+    </div>
+    <h2 id="caption-title" class="caption-title">1899–1908 · First Crossing</h2>
+    <p id="caption-body" class="caption-body">
+      An unbranded rack tank locomotive pushes a vintage wooden coach uphill along the 1-in-12 Abt rack gradient across the completed granite viaduct.
+    </p>
+    <div class="caption-specs">
+      <span>1:12 (8.33%) · Metre Gauge · Abt Rack</span>
+      <span>Space: Play · ←/→: Scrub · W: Wireframe</span>
+    </div>
+  </aside>
+
+  <!-- Bottom Reversible Timeline & Controls Dock -->
+  <section class="control-dock" aria-label="Construction timeline controls">
+    <div class="dock-top-row">
+      <div class="transport-group">
+        <button type="button" id="btn-play" class="btn-control primary" aria-label="Play or pause construction">
+          <svg id="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>
+          <svg id="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;" aria-hidden="true">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+          <span id="label-play">Play</span>
+        </button>
+
+        <button type="button" id="btn-replay" class="btn-control" title="Replay construction from 1891">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span class="btn-label-sm">Replay</span>
+        </button>
+
+        <button type="button" id="btn-guided" class="btn-control" aria-pressed="false" title="Toggle guided camera choreography (G)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M23 7l-7 5 7 5V7z"></path>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
+          <span>Guided</span>
+        </button>
+
+        <button type="button" id="btn-reset" class="btn-control" title="Reset camera to three-quarter viaduct view (R)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h6v6"></path>
+            <path d="M9 21H3v-6"></path>
+            <path d="M21 3l-7 7"></path>
+            <path d="M3 21l7-7"></path>
+          </svg>
+          <span class="btn-label-sm">Reset view</span>
+        </button>
+      </div>
+
+      <div class="chapter-pills" role="group" aria-label="Jump to construction stage">
+        <button type="button" class="chapter-btn" data-chapter="0">1891 Cut</button>
+        <button type="button" class="chapter-btn" data-chapter="1">Piers</button>
+        <button type="button" class="chapter-btn" data-chapter="2">Falsework</button>
+        <button type="button" class="chapter-btn" data-chapter="3">Deck</button>
+        <button type="button" class="chapter-btn" data-chapter="4">Abt Rack</button>
+        <button type="button" class="chapter-btn active" data-chapter="5">Crossing</button>
+      </div>
+    </div>
+
+    <div class="slider-wrap">
+      <div class="slider-meta">
+        <label for="timeline-slider">Construction timeline (1891–1908)</label>
+        <span id="slider-readout">100% · First Crossing (1899–1908)</span>
+      </div>
+      <div class="slider-track-box">
+        <div class="slider-ticks" aria-hidden="true">
+          <span class="slider-tick" style="left: 0%"></span>
+          <span class="slider-tick" style="left: 16%"></span>
+          <span class="slider-tick" style="left: 34%"></span>
+          <span class="slider-tick" style="left: 54%"></span>
+          <span class="slider-tick" style="left: 70%"></span>
+          <span class="slider-tick" style="left: 85%"></span>
+          <span class="slider-tick" style="left: 100%"></span>
+        </div>
+        <input
+          type="range"
+          id="timeline-slider"
+          min="0"
+          max="1000"
+          value="1000"
+          step="1"
+          aria-label="Construction timeline (1891–1908)"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="100"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources & Licenses Modal -->
+  <div id="modal-sources" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="modal-title">Railway story</h2>
+        <button type="button" id="btn-modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h3>From the plains to Ooty</h3>
+        <p>The 46 km metre-gauge line links Mettupalayam in the foothills with Coonoor and Udhagamandalam (Ooty). The journey climbs from about 326 m to 2,203 m.</p>
+        <h3>Building the line</h3>
+        <p>Proposed in 1854, the railway entered construction in 1891. The first 27 km to Coonoor opened in 1899. The remaining 19 km reached Ooty in 1908.</p>
+        <h3>What the railway changed</h3>
+        <p>A passenger could travel from the plains into the hills by rail. That connection helped people move between towns and supported the region’s economic development. Today the railway still carries passengers and gives visitors a working example of mountain railway engineering.</p>
+        <h3>How the train climbs</h3>
+        <p>On the steep rack section, a toothed wheel beneath the locomotive engages bars between the running rails. Select “See how it climbs” to follow that wheel as the train moves.</p>
+        <figure style="margin:1rem 0"><img loading="lazy" style="display:block;width:100%;height:auto;border-radius:8px" src="../../assets/nilgiri-ai.webp" alt="AI-generated concept of a Nilgiri mountain railway bridge"><figcaption>Original AI-generated railway concept for Aura Stories. An illustrative interpretation, not a photograph or an exact reconstruction of a specific bridge.</figcaption></figure>
+        
+        <p>This scene depicts a representative viaduct and a fictional hillside halt. <a href="https://whc.unesco.org/document/197296" target="_blank" rel="noopener">Southern Railway report</a> · <a href="https://whc.unesco.org/document/5857" target="_blank" rel="noopener">Historical assessment</a></p>
+        <details><summary>3D software license</summary><p>This exhibit uses Three.js to draw the interactive 3D scene. Three.js is available under the MIT License.</p><pre class="license-pre">The MIT License
+
+Copyright &copy; 2010-2026 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</pre></details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graceful WebGL Fallback -->
+  <div id="webgl-fallback" class="webgl-fallback" role="alert">
+    <div class="fallback-card"><img src="../../assets/nilgiri-ai.webp" alt="AI-generated Nilgiri railway concept" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px"><p>AI-generated concept illustration</p>
+      <h1>Aura Stories · Nilgiri Mountain Railway (1891–1908)</h1>
+      <p>
+        WebGL is currently unavailable on this browser or device, so the interactive 3D engineering model cannot render in real time.
+      </p>
+      <p>
+        Built between 1891 and 1908 across the steep Nilgiri Hills of Tamil Nadu, the metre-gauge line climbs a 1-in-12 ruling gradient using stone masonry viaducts, rock-cut embankments, and the double-bar toothed Abt rack-and-pinion system.
+      </p>
+      <p>
+        Enable hardware acceleration or open this page in a WebGL-capable browser to inspect the reversible construction stages, timber arch falsework, and locomotive crossing.
+      </p>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       APPLICATION MODULE (Three.js r186 + Civil Engineering Procedural Meshes)
+  ========================================================================= -->
+  <script type="importmap">{"imports": {"three-core": "../../assets/vendor/three-core.js", "three": "../../assets/vendor/three.js", "orbit": "../../assets/vendor/orbit.js"}}</script>
+  <script type="module" src="railway.js"></script>
+</body>
+</html>
