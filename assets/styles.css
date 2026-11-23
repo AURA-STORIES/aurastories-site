@@ -164,7 +164,7 @@ nav a {
     position: absolute;
     left: 5%;
     bottom: 100px;
-    max-width: 720px
+    max-width: 760px
 }
 
 .eyebrow {
@@ -216,7 +216,8 @@ p {
 .hero-copy>p:not(.eyebrow) {
     font-size: 18px;
     line-height: 1.6;
-    color: #eeeede
+    color: #eeeede;
+    max-width: 58ch
 }
 
 .text-link {
@@ -269,6 +270,15 @@ p {
     background: var(--paper);
     border-radius: var(--radius-md);
     overflow: hidden
+}
+
+.service-primary {
+    border-color: var(--color-accent);
+    box-shadow: inset 0 3px 0 var(--color-accent), var(--shadow-soft)
+}
+
+.service-primary .card-copy small {
+    color: var(--color-accent)
 }
 
 .art {
@@ -794,6 +804,10 @@ canvas {
     margin-top: 35px
 }
 
+#work>h2 {
+    max-width: 720px
+}
+
 .projects>a {
     padding: 30px 0;
     border-top: 1px solid var(--line)
@@ -839,6 +853,12 @@ canvas {
     display: block;
     font-size: 13px;
     margin-bottom: 16px
+}
+
+.form-intro {
+    color: #d5dfd9;
+    font-size: var(--text-sm);
+    max-width: 52ch
 }
 
 input,

@@ -13,4 +13,32 @@ function renderRailway(){$('#demo').innerHTML=frame('India,<br>taking shape.','E
 function renderBook(){let page=0;const pages=[['A quiet beginning','A small seed rested beneath the soil. Above it, the garden seemed busy with colour. “Will there be room for me?” it wondered.','A little hope','•'],['Small steps, every day','Rain softened the earth. The seed reached down with a root, then lifted a tiny shoot towards the light. No one saw its progress yet. But it kept growing.','Room to grow','❧'],['A world of possibility','One morning, two green leaves opened to the sun. A child knelt beside them and smiled. The seed had not become the whole garden. It had found its own place in it.','Hello, tomorrow','✿']];$('#demo').innerHTML=frame('Small stories.<br>Lasting impressions.','From manuscript to a book worth opening: editing, illustration direction, layout and ebook preparation.','<button id="prev-page">← Previous</button><button id="next-page">Next →</button>');function draw(){let [title,text,art,icon]=pages[page];$('#stage').innerHTML=`<div class="book-spread"><div class="book-picture"><h3>${art}</h3><img class="story-illustration" src="assets/story-${page+1}.svg" alt="Illustration of a seed growing into a flowering plant"></div><div class="book-page"><small>THE SEED OF POSSIBILITY / ${page+1}</small><h3>${title}</h3><p>${text}</p></div></div>`;$('#prev-page').disabled=page===0;$('#next-page').disabled=page===2;$('#demo-status').textContent=`Sample mini-story · Page ${page+1} of 3`};$('#prev-page').onclick=()=>{page=Math.max(0,page-1);draw()};$('#next-page').onclick=()=>{page=Math.min(2,page+1);draw()};draw()}
 function renderFlow(){let timers=[];$('#demo').innerHTML=frame('Less repetition.<br>More room to think.','A sample enquiry becomes an organised brief and a review task. In a real project, we connect your tools and agree which steps need human approval.','<button id="run-flow">Run sample workflow →</button>');$('#stage').innerHTML='<div class="workflow"><div class="flow-step">01 / Enquiry received<br><small>Sample: a café needs a new website</small></div><div class="flow-step">02 / Brief organised<br><small>Website · 5 pages · Timeline to confirm</small></div><div class="flow-step">03 / Ready for review<br><small>Kaviya reviews scope before replying</small></div></div>';$('#demo-status').textContent='Sample data only · No AI service or email is called.';$('#run-flow').onclick=()=>{timers.forEach(clearTimeout);document.querySelectorAll('.flow-step').forEach(s=>s.classList.remove('done'));document.querySelectorAll('.flow-step').forEach((s,i)=>timers.push(setTimeout(()=>s.classList.add('done'),i*700)))};cleanup=()=>timers.forEach(clearTimeout)}
 const ENQUIRY_ENDPOINT='https://script.google.com/macros/s/AKfycbwR1x-7yiH_2zyNJP39jmPcoaeiHWxvS-kVX6EUCy7uc_izChbvlbCIy2W1PIaJ4oRJVw/exec';
-$('#enquiry').onsubmit=async e=>{e.preventDefault();const form=e.target,status=$('#enquiry-status'),button=form.querySelector('[type="submit"]'),data=new FormData(form);if(data.get('website'))return;status.className='form-status';status.textContent='Sending your enquiry…';button.disabled=true;try{if(ENQUIRY_ENDPOINT.startsWith('__'))throw new Error('The enquiry service is not configured yet.');const body=new URLSearchParams();for(const [key,value] of data.entries())body.append(key,value);await fetch(ENQUIRY_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});form.reset();status.classList.add('success');status.textContent='Thank you. Your enquiry has been received. We’ll reply soon.'}catch(error){status.classList.add('error');status.textContent=error.message||'We could not send your enquiry. Please email aurastoriesteam@gmail.com.'}finally{button.disabled=false}};show('web');
+$('#enquiry').onsubmit=async e=>{
+  e.preventDefault();
+  const form=e.target,status=$('#enquiry-status'),button=form.querySelector('[type="submit"]'),data=new FormData(form);
+  if(data.get('website'))return;
+  const defaultLabel=button.textContent;
+  status.className='form-status';
+  status.textContent='Sending your enquiry…';
+  form.setAttribute('aria-busy','true');
+  button.disabled=true;
+  button.textContent='Sending…';
+  try{
+    if(ENQUIRY_ENDPOINT.startsWith('__'))throw new Error('The enquiry service is not configured yet.');
+    const body=new URLSearchParams();
+    for(const [key,value] of data.entries())body.append(key,value);
+    await fetch(ENQUIRY_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+    form.reset();
+    status.classList.add('success');
+    status.textContent='Thank you. Your enquiry has been received. We’ll reply within two working days.';
+    status.focus({preventScroll:true});
+  }catch(error){
+    status.classList.add('error');
+    status.textContent=error.message||'We could not send your enquiry. Please email aurastoriesteam@gmail.com.';
+    status.focus({preventScroll:true});
+  }finally{
+    form.removeAttribute('aria-busy');
+    button.disabled=false;
+    button.textContent=defaultLabel;
+  }
+};show('web');
