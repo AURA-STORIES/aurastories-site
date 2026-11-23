@@ -1,25 +1,3 @@
-:root {
-    --bg: #f7f3ea;
-    --paper: #fffdf8;
-    --ink: #173c36;
-    --muted: #586861;
-    --line: #d9ded4;
-    --soft: #e9ece2;
-    --gold: #e6bf7c;
-    --forest: #143f35;
-    color-scheme: light
-}
-
-html[data-theme=dark] {
-    --bg: #101f1c;
-    --paper: #192e28;
-    --ink: #f4efdf;
-    --muted: #b1c4b8;
-    --line: #385047;
-    --soft: #243c32;
-    color-scheme: dark
-}
-
 * {
     box-sizing: border-box
 }
@@ -33,7 +11,7 @@ body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+    font: var(--text-base)/var(--leading-body) var(--font-sans)
 }
 
 button,
@@ -74,7 +52,8 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-    outline: 3px solid #c68c39;
+    outline: 0;
+    box-shadow: var(--focus-ring);
     outline-offset: 4px
 }
 
@@ -111,7 +90,7 @@ nav a {
     align-items: center;
     justify-content: center;
     padding: 14px 24px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     background: var(--forest);
     color: #fffdf0;
     font-weight: 600;
@@ -143,7 +122,7 @@ nav a {
     max-height: 900px;
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: #fffdf1
 }
 
@@ -197,7 +176,7 @@ nav a {
 
 h1,
 h2 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -2px;
     line-height: 1.06;
@@ -205,11 +184,11 @@ h2 {
 }
 
 h1 {
-    font-size: clamp(52px, 6.5vw, 94px)
+    font-size: var(--text-hero)
 }
 
 h2 {
-    font-size: clamp(36px, 4vw, 56px)
+    font-size: var(--text-2xl)
 }
 
 em {
@@ -263,7 +242,7 @@ p {
 .section {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 85px 20px
+    padding: var(--space-8) 20px
 }
 
 .section-head {
@@ -282,26 +261,26 @@ p {
 .services {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 25px
+    gap: var(--space-5)
 }
 
 .service {
     border: 1px solid var(--line);
     background: var(--paper);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     overflow: hidden
 }
 
 .art {
     width: 100%;
-    height: 240px;
+    height: 220px;
     object-fit: cover;
     position: relative;
     overflow: hidden
 }
 
 .card-copy {
-    padding: 28px
+    padding: var(--space-5)
 }
 
 .card-copy small,
@@ -367,7 +346,7 @@ p {
     display: grid;
     place-items: center;
     background: #b29a74;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: #34203f;
     font-size: 37px;
     transform: rotate(-10deg);
@@ -454,7 +433,7 @@ p {
 
 .playground {
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--paper)
 }
@@ -869,9 +848,15 @@ select {
     padding: 12px;
     margin-top: 7px;
     border: 1px solid var(--line);
-    border-radius: 4px;
-    background: var(--paper);
-    color: var(--ink)
+    border-radius: var(--radius-sm);
+    background: var(--color-field);
+    color: var(--color-field-text)
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-field-placeholder);
+    opacity: 1
 }
 
 textarea {
@@ -1322,32 +1307,6 @@ footer p {
 }
 
 
-/* Shared Aura Stories brand — light theme */
-:root {
-  --bg: #f5efe4;
-  --paper: #fffcf6;
-  --ink: #2f271e;
-  --muted: #6f6253;
-  --line: rgba(88, 66, 37, 0.18);
-  --soft: #eee7da;
-  --gold: #e6bf7c;
-  --forest: #173c36;
-  --brand-accent: #9b7a3d;
-}
-
-/* Coordinated studio dark theme */
-html[data-theme="dark"] {
-  --bg: #101f1c;
-  --paper: #192e28;
-  --ink: #f4efdf;
-  --muted: #b1c4b8;
-  --line: #385047;
-  --soft: #243c32;
-  --gold: #e6bf7c;
-  --forest: #173c36;
-  --brand-accent: #d4b16e;
-}
-
 body {
   font-family: "Inter", system-ui, sans-serif;
 }
@@ -1368,4 +1327,126 @@ h2 em {
 .hero h1 em,
 .contact h2 em {
   color: var(--gold);
+}
+
+/* Phase 1: shared interface components and responsive navigation */
+body {
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+
+.site-header {
+  position: relative;
+  z-index: 20;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.button,
+.tabs button,
+.controls button {
+  transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
+}
+
+.button:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.service,
+.playground,
+.contact,
+.aura-video-frame {
+  box-shadow: var(--shadow-soft);
+}
+
+.card-copy p,
+.section-head > p,
+.projects p,
+.demo-info p {
+  color: var(--color-text-muted);
+}
+
+.contact input,
+.contact textarea,
+.contact select {
+  border-color: rgba(23, 60, 54, 0.42);
+  background: var(--color-field);
+  color: var(--color-field-text);
+}
+
+.contact input:focus-visible,
+.contact textarea:focus-visible,
+.contact select:focus-visible {
+  border-color: var(--color-focus);
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  #primary-nav {
+    display: none;
+    order: 3;
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  #primary-nav.is-open {
+    display: flex;
+  }
+
+  #primary-nav > a,
+  #primary-nav > a:not(.button) {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  #primary-nav .button.small {
+    justify-content: flex-start;
+    margin: var(--space-1) 0;
+  }
+
+  #theme {
+    margin: var(--space-2) var(--space-3);
+  }
+
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  .art {
+    height: 190px;
+  }
+
+  .card-copy {
+    padding: var(--space-5);
+  }
 }
