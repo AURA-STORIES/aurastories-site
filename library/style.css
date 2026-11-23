@@ -1,7 +1,7 @@
 :root {
   --bg: var(--color-canvas);
   --bg-soft: var(--color-surface-soft);
-  --card: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  --card: var(--surface-panel);
   --text: var(--color-text);
   --muted: var(--color-text-muted);
   --gold: var(--color-accent);
@@ -20,9 +20,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 32%),
-    var(--color-canvas);
+  background: var(--canvas-wash), var(--color-canvas);
   color: var(--text);
   line-height: var(--leading-body);
 }
@@ -52,7 +50,7 @@ img { display: block; max-width: 100%; }
 .brand-mark img { height: 52px; width: 52px; object-fit: contain; border-radius: var(--radius-sm); }
 
 .top-nav { display: flex; flex-wrap: wrap; gap: 1rem 1.2rem; justify-content: flex-end; }
-.top-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: var(--text-sm); color: var(--muted); position: relative; }
+.top-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: var(--text-sm); color: var(--color-text); position: relative; }
 .top-nav a::after {
   content: ""; position: absolute; left: 0; bottom: -0.28rem; width: 100%; height: 1px;
   background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform var(--duration-base) ease;
@@ -74,7 +72,7 @@ img { display: block; max-width: 100%; }
   font: 600 var(--text-sm)/1 var(--font-sans);
 }
 
-:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
 
 /* Hero Section */
 .hero {
@@ -163,7 +161,7 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-serif);
   font-size: 3.2rem;
   line-height: 1;
-  color: var(--gold);
+  color: var(--color-accent-text);
   margin-bottom: 0.5rem;
   font-weight: 700;
 }
@@ -172,7 +170,7 @@ img { display: block; max-width: 100%; }
 .section { padding: 80px 0; scroll-margin-top: 90px; }
 .section-tint { background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(205,183,138,0.08)); }
 .section h2 { font-family: var(--font-serif); font-size: var(--text-2xl); line-height: var(--leading-heading); color: var(--text); }
-.section-label { text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.8rem; font-weight: 600; color: var(--gold); }
+.section-label { text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.8rem; font-weight: 600; color: var(--color-accent-text); }
 .two-col { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 2.5rem; align-items: center; }
 .two-col.reverse { grid-template-columns: 1.1fr 0.9fr; }
 .tamil-block { font-family: "Noto Serif Tamil", serif; border-left: 3px solid var(--gold); padding-left: 1rem; background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 0 18px 18px 0; }
@@ -191,7 +189,7 @@ img { display: block; max-width: 100%; }
 .volume-card:hover { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-8px); box-shadow: 0 26px 45px rgba(58, 39, 18, 0.25); }
 .volume-card img { width: 100%; aspect-ratio: 3 / 4.5; object-fit: cover; }
 .volume-content { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
-.volume-number { color: var(--gold); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; }
+.volume-number { color: var(--color-accent-text); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; }
 .volume-content h3 { font-family: var(--font-serif); font-size: var(--text-xl); margin: 0.4rem 0; color: var(--text); }
 .volume-subtitle { font-size: 0.92rem; color: var(--muted); margin-bottom: 1rem; min-height: 2.8em; }
 
