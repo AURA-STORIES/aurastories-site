@@ -18,7 +18,7 @@ if (navToggle && primaryNav) {
   });
 
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
       closeNav();
       navToggle.focus();
     }
