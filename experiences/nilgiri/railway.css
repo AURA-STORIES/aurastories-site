@@ -52,6 +52,27 @@
       -webkit-user-select: none;
     }
 
+    /* Restrained observatory-style HUD: forest glass, signal teal, and brass. */
+    :root {
+      --surface-glass: rgba(11, 24, 23, 0.82);
+      --surface-solid: #142623;
+      --surface-dark: rgba(7, 16, 17, 0.96);
+      --border-subtle: rgba(102, 198, 184, 0.28);
+      --border-strong: rgba(221, 183, 111, 0.58);
+      --text-primary: #f2f3e9;
+      --text-secondary: #c4d3cd;
+      --text-muted: #9eafa8;
+      --accent-rail: #278f83;
+      --accent-rail-hover: #1d756c;
+      --accent-brass: #dfb66d;
+      --badge-hist-bg: rgba(39, 143, 131, 0.2);
+      --badge-hist-text: #b8eee2;
+      --badge-eng-bg: rgba(223, 182, 109, 0.18);
+      --badge-eng-text: #f1d8a8;
+      --shadow-soft: 0 10px 32px rgba(1, 9, 10, 0.3), 0 0 20px rgba(68, 190, 173, 0.08);
+      --shadow-elevated: 0 18px 48px rgba(1, 9, 10, 0.42), 0 0 24px rgba(68, 190, 173, 0.1);
+    }
+
     /* Full-screen 3D Viewport */
     #canvas-container {
       position: fixed;
@@ -783,6 +804,19 @@
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
       }
+    }
+
+    .brand-bar, .btn-ghost, .caption-card, .control-dock {
+      border-color: var(--border-subtle);
+      background-image: linear-gradient(135deg, rgba(92, 190, 177, 0.06), transparent 45%);
+    }
+
+    .chapter-btn.active, .btn-control.primary {
+      box-shadow: 0 0 18px rgba(61, 190, 173, 0.25);
+    }
+
+    .stage-badge.historical, .stage-badge.engineering {
+      border: 1px solid var(--border-subtle);
     }
   .btn-hero-replay[hidden]{display:none}.view-tools{display:flex;align-items:center;gap:5px;pointer-events:auto;align-self:flex-start;margin-left:max(0px,calc((100% - 1360px)/2))}
     .view-tools button{min-height:32px}

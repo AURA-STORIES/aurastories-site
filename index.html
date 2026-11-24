@@ -27,11 +27,11 @@
   href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
   rel="stylesheet"
 >
-    <link rel="stylesheet" href="assets/tokens.css?v=3">
-    <link rel="stylesheet" href="assets/styles.css?v=4">
-    <script src="assets/theme.js"></script>
-    <script defer src="assets/navigation.js?v=3"></script>
-    <script defer src="assets/app.js?v=5"></script>
+    <link rel="stylesheet" href="assets/tokens.css?v=4">
+    <link rel="stylesheet" href="assets/styles.css?v=6">
+    <script src="assets/theme.js?v=2"></script>
+    <script defer src="assets/navigation.js?v=4"></script>
+    <script defer src="assets/app.js?v=7"></script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Organization","name":"Aura Stories","url":"https://aurastories.co.in/","logo":"https://aurastories.co.in/assets/aura-logo.jpg","email":"aurastoriesteam@gmail.com","sameAs":["https://www.instagram.com/aura._stories","https://youtube.com/@aura-stories-jm"]}
     </script>
@@ -40,10 +40,14 @@
 <body><a class="skip" href="#main">Skip to content</a>
     <header class="site-header"><a href="#" aria-label="Aura Stories home"><img class="logo" src="assets/aura-logo.jpg"
                 alt="Aura Stories"></a>
-        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span>Menu</span><span aria-hidden="true">☰</span></button>
-        <nav id="primary-nav" aria-label="Main navigation"><a href="#services">What we do</a><a href="#playground">Playground</a><a
-                class="button small" href="#contact">Let’s create →</a><a href="/library/">Books &amp; Stories</a><button id="theme"
-                aria-label="Change colour theme">◐</button></nav>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></button>
+        <nav id="primary-nav" aria-label="Main navigation" inert>
+            <a href="#services">What we do</a><a href="#playground">Playground</a><a href="#work">Selected work</a>
+            <a class="button small" href="#contact">Let’s create</a><a href="/library/">Books &amp; Stories</a>
+            <label class="theme-option" for="theme-select">Appearance
+                <select id="theme-select" aria-label="Appearance"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+            </label>
+        </nav>
     </header>
     <main id="main">
         <section class="hero"><img src="assets/nilgiri-ai.webp" width="1536" height="1024"
@@ -74,10 +78,7 @@
             </div>
             <div class="services">
                 <article class="service web-card service-primary">
-                    <div class="art mini-site"><span>THE WILD LEAF / CONCEPT</span><strong>A slower<br>kind of
-                            escape.</strong>
-                        <div class="sun"></div>
-                    </div>
+                    <div class="art service-art service-art--web" role="img" aria-label="A polished retreat website displayed on a laptop"></div>
                     <div class="card-copy"><small>PRIMARY SERVICE · 01 / DESIGN &amp; BUILD</small>
                         <h3>Websites with purpose.</h3>
                         <p>Business websites, wedding invitations, portfolios and product experiences that make the next
@@ -85,15 +86,15 @@
                     </div>
                 </article>
                 <article class="service">
-                    <div class="art play-art"><span>✦</span><span>◇</span><span>✧</span><span>✦</span></div>
+                    <div class="art service-art service-art--games" role="img" aria-label="Wooden tabletop puzzle and game pieces"></div>
                     <div class="card-copy"><small>02 / PLAY & LEARN</small>
                         <h3>A little more wonder.</h3>
                         <p>Browser games, board-game concepts and educational puzzles. Playable ideas made to spark
                             curiosity.</p><button data-open="game">Try a game →</button>
                     </div>
                 </article>
-                <article class="service"><img class="art" src="assets/nilgiri-small.webp" loading="lazy"
-                        alt="Nilgiri railway concept">
+                <article class="service">
+                    <div class="art service-art service-art--railway" role="img" aria-label="Mountain railway crossing a stone viaduct"></div>
                     <div class="card-copy"><small>03 / IMMERSIVE EXPERIENCES</small>
                         <h3>Worlds worth exploring.</h3>
                         <p>Interactive exhibits, visual storytelling and technical prototypes that bring a complex idea
@@ -101,9 +102,7 @@
                     </div>
                 </article>
                 <article class="service">
-                    <div class="art book-art">
-                        <div>THE LITTLE<br><b>Seed of<br>Possibility</b><span>AN AURA SAMPLE STORY</span></div>
-                    </div>
+                    <div class="art service-art service-art--publishing" role="img" aria-label="An open Tamil literature book on warm paper"></div>
                     <div class="card-copy"><small>04 / PUBLISHING & LANGUAGE</small>
                         <h3>Stories that travel.</h3>
                         <p>Ebooks, illustrated stories, Tamil–English localisation and learning content, shaped for the
@@ -111,8 +110,7 @@
                     </div>
                 </article>
                 <article class="service">
-                    <div class="art flow-art"><span>01 &nbsp; Enquiry</span><i>↓</i><span>02 &nbsp; Organised
-                            brief</span><i>↓</i><span>03 &nbsp; Human review</span></div>
+                    <div class="art service-art service-art--automation" role="img" aria-label="A simple workflow of connected paper cards"></div>
                     <div class="card-copy"><small>05 / PRACTICAL AUTOMATION</small>
                         <h3>Make room for real work.</h3>
                         <p>Simple tools and AI-assisted workflows that reduce repetition, with people reviewing the
@@ -120,9 +118,7 @@
                     </div>
                 </article>
                 <article class="service">
-                    <div class="art research-art"><span>What if?</span>
-                        <div>ASK → INVESTIGATE → TEST</div>
-                    </div>
+                    <div class="art service-art service-art--research" role="img" aria-label="A field notebook, map, and magnifying glass"></div>
                     <div class="card-copy"><small>06 / RESEARCH & PROTOTYPES</small>
                         <h3>Find the next possibility.</h3>
                         <p>Opportunity research, product sourcing, marketing support and legitimate academic guidance,
@@ -144,55 +140,26 @@
                 <div id="demo" role="tabpanel"></div>
             </div>
         </section>
-        <section id="animation" class="section">
-            <div class="section-head">
-                <div>
-                <p class="eyebrow">AURA STORIES / MOTION & IMAGINATION</p>
-                <h2>A journey <em>through the hills.</em></h2>
-                </div>
-                <p>
-                An AI-generated film inspired by the
-                landscapes of the Nilgiris.
-                </p>
-            </div>
-
-            <div class="aura-video-frame">
-                <video
-                class="aura-feature-video"
-                controls
-                playsinline
-                preload="metadata"
-                aria-label="Nilgiri railway film"
-                >
-                <source
-                    src="assets/Niligiris_Rail.mp4"
-                    type="video/mp4"
-                >
-                Your browser does not support this video.
-                <a href="assets/Niligiris_Rail.mp4">
-                    Open the video
-                </a>
-                </video>
-            </div>
-
-            <p class="aura-video-note">
-                AI-generated creative visualisation.
-            </p>
-            </section>
         <section id="work" class="section">
             <p class="eyebrow">SELECTED AURA PROJECTS</p>
             <h2>Published work, demos<br><em>and concept studies.</em></h2>
-            <div class="projects"><a href="https://www.amazon.in/gp/product/B0GSBTVZZ1" target="_blank"
-                    rel="noopener"><small>PUBLISHING / AURA PROJECT</small>
-                    <h3>Tamil wisdom.<br>Living stories.</h3>
-                    <p>Our Thirukkural-inspired publishing work.</p><span>View on Amazon →</span>
-                </a><a href="/wedding-demo/" target="_blank" rel="noopener noreferrer"><small>WEB / WEDDING DEMO</small>
-                    <h3>An invitation.<br>An experience.</h3>
-                    <p>A sample wedding website with a playful journey and fictional event details.</p><span>Explore the invitation demo →</span>
-                </a><a href="experiences/nilgiri/index.html" target="_blank" rel="noopener noreferrer"><small>INTERACTIVE / CONCEPT STUDY</small>
-                    <h3>India,<br>taking shape.</h3>
-                    <p>A railway construction exhibit and motion study.</p><span>Open the experience →</span>
-                </a></div>
+            <div class="projects">
+                <a class="project-card" href="/library/">
+                    <div class="project-image project-image--book"><img src="assets/thirukkural-cover-v1.webp" alt="Thirukkural Aura Stories Volume 1 cover" loading="lazy"></div>
+                    <div class="project-copy"><small>PUBLISHING / AURA STORIES</small><h3>Tamil wisdom.<br>Living stories.</h3>
+                        <p>Our Thirukkural-inspired publishing work.</p><span>Explore the Aura Stories books</span></div>
+                </a>
+                <a class="project-card" href="/wedding-demo/" target="_blank" rel="noopener noreferrer">
+                    <div class="project-image"><img src="wedding-demo/image_57325f.jpg" alt="Illustration from a fictional wedding invitation demo" loading="lazy"></div>
+                    <div class="project-copy"><small>FICTIONAL DEMO / WEBSITE</small><h3>An invitation.<br>An experience.</h3>
+                        <p>A sample wedding website with a playful journey and fictional event details.</p><span>Explore the invitation demo</span></div>
+                </a>
+                <a class="project-card" href="experiences/nilgiri/index.html" target="_blank" rel="noopener noreferrer">
+                    <div class="project-image"><img src="assets/nilgiri-small.webp" alt="Nilgiri mountain railway crossing a stone viaduct" loading="lazy"></div>
+                    <div class="project-copy"><small>INTERACTIVE / CONCEPT STUDY</small><h3>India,<br>taking shape.</h3>
+                        <p>A railway construction exhibit and motion study.</p><span>Open the experience</span></div>
+                </a>
+            </div>
         </section>
         <section id="contact" class="section contact">
             <div>
