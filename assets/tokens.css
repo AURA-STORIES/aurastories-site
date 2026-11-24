@@ -10,12 +10,19 @@
   --color-border: rgba(88, 66, 37, 0.2);
   --color-brand: #173c36;
   --color-accent: #9b7a3d;
+  --color-accent-text: #795a2a;
   --color-gold: #e6bf7c;
   --color-on-brand: #fffaf0;
   --color-focus: #b9781e;
   --color-field: #fffdf8;
   --color-field-text: #2f271e;
   --color-field-placeholder: #756b60;
+
+  /* Shared studio and library surfaces */
+  --canvas-wash: radial-gradient(circle at top, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 32%);
+  --surface-panel: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  --hero-shade: linear-gradient(90deg, rgba(20, 15, 10, .85), rgba(20, 15, 10, .35) 65%, transparent), linear-gradient(0deg, rgba(20, 15, 10, .85), transparent 72%);
+  --color-error-text: #8d3425;
 
   /* Existing aliases used by the studio components */
   --bg: var(--color-canvas);
@@ -70,6 +77,8 @@ html[data-theme="dark"] {
   --color-text-muted: #becdc5;
   --color-border: #466158;
   --color-accent: #d4b16e;
+  --color-accent-text: var(--color-accent);
+  --color-error-text: #ffd0c8;
   --color-focus: #f0c777;
   --color-field: #f7f1e6;
   --color-field-text: #241f19;

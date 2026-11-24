@@ -52,8 +52,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-    outline: 0;
-    box-shadow: var(--focus-ring);
+    outline: 2px solid var(--color-focus);
     outline-offset: 4px
 }
 
@@ -92,9 +91,9 @@ nav a {
     padding: 14px 24px;
     border-radius: var(--radius-sm);
     background: var(--forest);
-    color: #fffdf0;
+    color: var(--color-on-brand);
     font-weight: 600;
-    font-size: 15px
+    font-size: var(--text-sm)
 }
 
 .button.small {
@@ -136,10 +135,9 @@ nav a {
 }
 
 .hero-shade {
-    background: linear-gradient(90deg, rgba(4, 26, 20, .78), transparent 85%), linear-gradient(0deg, rgba(4, 26, 20, .8), transparent 70%)
+    background: var(--hero-shade)
 }
 
-.hero-top,
 .hero-foot {
     position: absolute;
     left: 4%;
@@ -151,9 +149,6 @@ nav a {
     letter-spacing: 2px
 }
 
-.hero-top {
-    top: 30px
-}
 
 .hero-foot {
     bottom: 25px;
@@ -179,7 +174,7 @@ h2 {
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -2px;
-    line-height: 1.06;
+    line-height: var(--leading-heading);
     margin: 0 0 24px
 }
 
@@ -193,7 +188,7 @@ h2 {
 
 em {
     font-weight: 400;
-    color: #a67839
+    color: var(--color-accent-text)
 }
 
 h1 em,
@@ -217,28 +212,14 @@ p {
     font-size: 18px;
     line-height: 1.6;
     color: #eeeede;
-    max-width: 58ch
+    max-width: 65ch
 }
 
 .text-link {
     font-size: 14px
 }
 
-.ticker {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 30px 20px;
-    border-bottom: 1px solid var(--line);
-    font-size: 11px;
-    letter-spacing: 2px
-}
 
-.ticker span {
-    color: #a67839
-}
 
 .section {
     max-width: 1280px;
@@ -278,7 +259,7 @@ p {
 }
 
 .service-primary .card-copy small {
-    color: var(--color-accent)
+    color: var(--color-accent-text)
 }
 
 .art {
@@ -1062,9 +1043,6 @@ footer p {
         gap: 30px
     }
 
-    .hero-top span:last-child {
-        display: none
-    }
 
     .book-spread {
         grid-template-columns: 1fr
@@ -1140,11 +1118,6 @@ footer p {
         gap: 15px
     }
 
-    .hero-top {
-        font-size: 8px;
-        letter-spacing: 1px;
-        left: 7%
-    }
 
     .hero-foot {
         font-size: 8px;
@@ -1165,16 +1138,7 @@ footer p {
         font-size: 15px
     }
 
-    .ticker {
-        gap: 8px;
-        font-size: 8px;
-        letter-spacing: .5px;
-        padding: 24px 18px
-    }
 
-    .ticker span {
-        display: none
-    }
 
     .section {
         padding: 55px 20px
@@ -1376,20 +1340,14 @@ footer p {
 }
 
 
-body {
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-h1,
-h2,
 .demo-info h3,
 .projects h3,
 .video-caption h3 {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-serif);
 }
 
 h2 em {
-  color: var(--brand-accent);
+  color: var(--color-accent-text);
 }
 
 /* Light gold remains readable on dark feature panels */
@@ -1398,12 +1356,7 @@ h2 em {
   color: var(--gold);
 }
 
-/* Phase 1: shared interface components and responsive navigation */
-body {
-  background: var(--color-canvas);
-  color: var(--color-text);
-}
-
+/* Shared interface components and responsive navigation */
 .site-header {
   position: relative;
   z-index: 20;
@@ -1518,6 +1471,38 @@ body {
   .card-copy {
     padding: var(--space-5);
   }
+}
+
+/* The homepage and library share the same warm paper surfaces. */
+.studio-home {
+  background: var(--canvas-wash), var(--color-canvas);
+}
+
+.studio-home :is(.service, .playground, .contact) {
+  background: var(--surface-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.studio-home .service-primary {
+  border-color: var(--color-accent);
+}
+
+.studio-home .contact {
+  color: var(--color-text);
+}
+
+.studio-home .contact :is(.eyebrow, h2 em, .form-status.success) {
+  color: var(--color-accent-text);
+}
+
+.studio-home .contact :is(.form-intro, .optional, .muted) {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.studio-home .form-status.error {
+  color: var(--color-error-text);
 }
 
 /* Compact, image-led showcase rail */
