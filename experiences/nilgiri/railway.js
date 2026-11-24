@@ -87,8 +87,8 @@
         badge: 'Engineering sequence · Stage 5',
         badgeType: 'engineering',
         caption: 'Creosoted sleepers, cast-iron rail chairs, and flanged metre-gauge rails climb the grade, paired with the staggered double-bar toothed Abt rack between them. Zoom in to inspect the teeth.',
-        camPos: new THREE.Vector3(7, 15.8, 12.5),
-        camTarget: new THREE.Vector3(2, 12.6, 0.2)
+        camPos: new THREE.Vector3(14, 25, 22),
+        camTarget: new THREE.Vector3(1, 12.8, 0.2)
       },
       {
         id: 5,
@@ -1907,7 +1907,7 @@
     const state = {
       t: 1.0,
       playing: false,
-      guidedCamera: false,
+      guidedCamera: true,
       wireframeMode: false,
       playSpeed: prefersReducedMotion ? 0.028 : 0.042, // ~24s full civil engineering playback
       resettingCamera: false,
@@ -2250,15 +2250,17 @@
         const delta=next.clone().sub(lastFollowPosition);
         controls.target.add(delta);camera.position.add(delta);lastFollowPosition.copy(next);
       }
-      if (state.guidedCamera && !prefersReducedMotion) {
+      if (state.guidedCamera) {
         const ch = CHAPTERS[state.activeChapterIdx];
-        const alpha = 1 - Math.exp(-dt * 2.2);
+        const alpha = prefersReducedMotion ? 1 : 1 - Math.exp(-dt * 2.2);
         if(state.t>=.445 && state.t<.61){
           const target=ARCH_SPANS[1].midPt.clone().add(new THREE.Vector3(0,1.9,0));
           controls.target.lerp(target,alpha); camera.position.lerp(target.add(new THREE.Vector3(4,2,12)),alpha);
         } else if(state.t>=.85){
-          controls.target.lerp(new THREE.Vector3(4,11,0),alpha);
-          camera.position.lerp(new THREE.Vector3(14,25,61),alpha);
+          const frame=getTrackFrame(currentTrainU);
+          const target=gearPosition().addScaledVector(frame.up,1.1);
+          const cameraGoal=target.clone().addScaledVector(frame.right,5.2).addScaledVector(frame.tan,-9).addScaledVector(frame.up,4.2);
+          controls.target.lerp(target,alpha); camera.position.lerp(cameraGoal,alpha);
         } else {
           camera.position.lerp(ch.camPos,alpha); controls.target.lerp(ch.camTarget,alpha);
         }
@@ -2285,4 +2287,4 @@
       syncUI();
       animate();
     }
-  
+
